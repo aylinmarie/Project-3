@@ -70,7 +70,30 @@
 /* 0 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/davidhernquist/project-3/client/components/create.assignment/create.controller.js'");
+CreateAssignmentController.$inject = ['$stateParams', 'UsersService'];
+
+function CreateAssignmentController($stateParams, UsersService) {
+	const vm = this;
+
+	vm.addNewAssignment = addNewAssignment;
+	vm.newAssignmnet = {};
+
+	activate();
+
+	function activate() {
+		addNewAssignment();
+	}
+
+	function addNewAssignment() {
+		/*		CriminalsService
+  			.loadCurrent($stateParams.criminalId)
+  			.then(function resolve(response){
+  				vm.current = response.data.criminal;
+  			});	*/
+	}
+}
+
+module.exports = CreateAssignmentController;
 
 /***/ }),
 /* 1 */
@@ -178,9 +201,17 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/davidhernquist/project-3/client/components/create.assignment/create.component.js'");
+const controller = __webpack_require__(0);
+const template = __webpack_require__(13);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('gradeBook').component('createAssignment', component);
 
 /***/ }),
 /* 6 */
@@ -38324,7 +38355,12 @@ module.exports = angular;
 
 
 /***/ }),
-/* 13 */,
+/* 13 */
+/***/ (function(module, exports) {
+
+module.exports = "<h1>test create assignment</h1>\n\n<div class=\"create\">\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input type=\"text\" \n\t\t    ng-model=\"$ctrl.newAssignment.name\" \n\t\t    placeholder=\"put a name here...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input type=\"text\" \n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\" \n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input type=\"text\" \n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\" \n\t    \tplaceholder=\"points...\">\n\t</div>\n    <div>\n      <input type=\"submit\" value=\"Add Assignment\">\n    </div>\n</div> \n\n";
+
+/***/ }),
 /* 14 */
 /***/ (function(module, exports) {
 
