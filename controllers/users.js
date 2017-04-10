@@ -22,7 +22,7 @@ router.get('/:id', function showAction(request, response) {
 	User.findById({_id: id}, function(error, user) {
 		if(error) response.json({message: 'Could not find the user b/c:' + error});
 
-		res.json({user: user});
+		response.json({user: user});
 	});
 });
 

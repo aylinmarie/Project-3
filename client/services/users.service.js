@@ -10,8 +10,6 @@ function UsersService($http) {
 		self.loadCurrent = loadCurrent;
 		self.addAssignment = addAssignment;
 		self.addNewUser = addNewUser;
-		/*self.updateUser = updateUser;*/
-		/*self.addNewAssignment = addNewAssignment;*/
 		self.deleteUser = deleteUser;
 
 
