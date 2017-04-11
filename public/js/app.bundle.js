@@ -79,7 +79,6 @@ function CreateAssignmentController($stateParams, UsersService) {
   vm.addNewAssignment = addNewAssignment; //attaching the function to vm
   vm.newAssignment = {}; //initializing newAssignment
   vm.current = {};
-  vm.updatedStudents = {};
 
   activate();
 
@@ -122,11 +121,21 @@ module.exports = HomeController;
 /* 3 */
 /***/ (function(module, exports) {
 
-LoginController.$inject = [];
+LoginController.$inject = ['$state', 'AuthService'];
 
-function LoginController() {
+function LoginController($state, AuthService) {
   const vm = this;
-  let temp = '58e8f03b22c5dc033454ed1b';
+
+  vm.loginUnauth = loginUnauth;
+  vm.login = {};
+
+  function loginUnauth() {
+    console.log("Hit login button");
+    AuthService.loginUser(vm.login.email, vm.login.password).then(function resolve(response) {
+      console.log("function working");
+      $state.go("show", { userId: response.data });
+    });
+  }
 }
 
 module.exports = LoginController;
@@ -138,51 +147,61 @@ module.exports = LoginController;
 ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
 
 function ShowController($stateParams, $scope, UsersService) {
-    const vm = this;
-    vm.current = {};
-    vm.user = [];
-    vm.studentsGrades = [];
-    vm.deleteUser = deleteUser;
+  const vm = this;
+  vm.current = {};
+  vm.deleteAssign = deleteAssign;
+  vm.saveGrades = saveGrades;
 
-    activate();
+  activate();
 
-    function activate() {
-        loadCurrent();
+  function activate() {
+    loadCurrent();
+  }
+
+  function loadCurrent(userId) {
+
+    UsersService.loadCurrent($stateParams.userId).then(function resolve(response) {
+      vm.current = response.data.user;
+    });
+  }
+
+  function deleteAssign() {
+    console.log("an assignmentName: " + vm.current._id);
+    console.log("delete: " + vm.current.students[0].assignments[1].name);
+
+    UsersService.deleteAssignment(vm.current._id, vm.current.students[0].assignments[1].name).then(function resolve(response) {
+      console.log("back from the server!");
+      vm.current = response.data.user;
+      console.log("new user: " + vm.current);
+    });
+  }
+
+  function saveGrades() {
+    console.log("Save grade function called" + vm.current._id);
+
+    UsersService.saveNewGrade(vm.current._id, vm.current).then(function resolve(response) {
+      console.log("back from the server");
+      vm.current = response.data.user;
+    });
+  }
+
+  $scope.getSumPointsEarned = function (student) {
+    var total = Number(0);
+    for (var i = 0; i < student.assignments.length; i++) {
+      var points = Number(student.assignments[i].pointsEarned);
+      total += points;
     }
+    return total;
+  };
 
-    function loadCurrent(userId) {
-        console.log($stateParams);
-
-        UsersService.loadCurrent($stateParams.userId).then(function resolve(response) {
-            vm.current = response.data.user;
-        });
+  $scope.getSumPointsMax = function (student) {
+    var total = Number(0);
+    for (var i = 0; i < student.assignments.length; i++) {
+      var points = Number(student.assignments[i].pointsMax);
+      total += points;
     }
-
-    $scope.getSumPointsEarned = function (student) {
-        var total = Number(0);
-        for (var i = 0; i < student.assignments.length; i++) {
-            var points = Number(student.assignments[i].pointsEarned);
-            total += points;
-        }
-        return total;
-    };
-
-    $scope.getSumPointsMax = function (student) {
-        var total = Number(0);
-        for (var i = 0; i < 2; i++) {
-            var points = Number(student.assignments[i].pointsMax);
-            total += points;
-        }
-        return total;
-    };
-
-    function deleteUser(user) {
-        UsersService.deleteUser(user).then(function (response) {
-            console.log("Deleted");
-            // var index = vm.user.indexOf(user);
-            // vm.user.splice(index, 1);
-        });
-    }
+    return total;
+  };
 }
 
 module.exports = ShowController;
@@ -241,6 +260,9 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
   }).state('createAssignment', {
     url: '/create/:userId',
     template: '<create-assignment></create-assignment>'
+  }).state('deleteAssignment', {
+    url: '/delete/:userId/:assignmentName',
+    template: '<delete-assignment></delete-assignment>'
   });
 
   $urlRouterProvider.otherwise('/');
@@ -326,26 +348,21 @@ angular.module('gradeBook').component('signup', component);
 /* 13 */
 /***/ (function(module, exports) {
 
-// angular
-// 	.module('gradeBook')
-// 	.service('AuthService', AuthService);
-//
-// AuthService.$inject = ['$http', '$state', 'Notification'];
-// function AuthService($http, $state, Notification) {
-//     const self = this;
-//
-//     self.logUserIn = logUserIn;
-//
-//     // function logUserIn(credentials) {
-//     //     return $http
-//     //         .post('/api/sessions', credentials)
-//     //         .then(function onSuccessDoThis(res) {
-//     //             $state.go('foldersIndex');
-//     //         }, function onErrorDoThis(res) {
-//     //             Notification.errorMessage(res.message);
-//     //         });
-//     // }
-// }
+angular.module('gradeBook').service('AuthService', AuthService);
+
+AuthService.$inject = ['$http'];
+function AuthService($http) {
+  const self = this;
+
+  self.loginUser = loginUser;
+
+  function loginUser(email, password) {
+    return $http.post('api/login/', {
+      email: email,
+      password: password
+    });
+  }
+}
 
 /***/ }),
 /* 14 */
@@ -361,16 +378,14 @@ function UsersService($http) {
 	self.loadCurrent = loadCurrent;
 	self.addAssignment = addAssignment;
 	self.addNewUser = addNewUser;
-	/*self.updateUser = updateUser;*/
-	/*self.addNewAssignment = addNewAssignment;*/
-	self.deleteUser = deleteUser;
+	self.deleteAssignment = deleteAssignment;
+	self.saveNewGrade = saveNewGrade;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
 	}
 
 	function addAssignment(id, name, assignmentType, pointsMax) {
-
 		return $http.put('/api/users/' + id, {
 			name: name,
 			assignmentType: assignmentType,
@@ -381,15 +396,18 @@ function UsersService($http) {
 		return $http.post('/api/users/', newUser);
 	}
 
-	/*function updateUser(id) {
- 		return $http
- 	.put('/api/users/' + id);
- 	return $http.patch('/api/users/' + id );
- }*/
+	function deleteAssignment(id, assignmentName) {
+		console.log("Services 1:" + assignmentName);
+		return $http.put('/api/delete/' + id, {
+			assignmentName: assignmentName });
+	}
 
-	function deleteUser(user) {
-		console.log("My user id is not working");
-		return $http.delete('/api/users/' + user._id);
+	function saveNewGrade(id, user) {
+		console.log("Hey there " + user._id);
+		console.log(id);
+		return $http.patch('/api/grades/' + id, {
+			user: user
+		});
 	}
 }
 
@@ -38471,26 +38489,26 @@ module.exports = angular;
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "<h1>test create assignment</h1>\n\n <div class=\"create\">\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div>\n</div>\n</div>\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div> \n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div><br>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
 /* 19 */,
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "<script type=\"text/javascript\"></script>\n\n<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>\n\n<div class=\"container\">\n\n    <div id=\"tabs-home\" class=\"row slider\" style=\"/* background:url(http://legalprom.cl/wp-content/uploads/2014/05/main-bg.jpg) no-repeat center fixed; */background-color: rgba(245, 245, 245, 0.25);\">\n\n        <!-- tab content -->\n        <div id=\"wea\" class=\"col-sm-12 tab-content\">\n\n            <div class=\"tab-pane active text-style fade in active\" id=\"tab1\">\n                <h2>GRADEBOOK SOFTWARE FOR THE MODERN TEACHER</h2>\n                <p></p>\n                <p><strong>Desde $74.990 y 24 hrs.</strong></p>\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">Seleccione Sociedad para comenzar:</h3>\n                    </div>\n                    <div class=\"panel-body\">\n\n<div class=\"row features-home-right\">\n        <div class=\"col-md-5\">\n            <img alt=\"rapidez de legalprom\" src=\"http://legalprom.cl/wp-content/uploads/2014/05/rapidez.jpg\">\n        </div>\n        <div class=\"col-md-7\">\n            <div class=\"color\"><h3>Seguro</h3>\n            <h4>Productos legales seguros a su alcance</h4>\n            <p>LegalProm registra una tasa de satisfacción de prácticamente un 100%. Nuestras sociedades han superado todos los controles bancarios y de otras entidades tales como ministerios, ChileCompra, municipalidades, etc.</p></div>\n <div><a href=\"http://legalprom.com/por-que-legalprom/\" class=\"btn btn-primary btn-lg\" style=\"float:right;margin-top:50px;margin-right: 100px;padding:20px;\">Sign Up Today!</a></div>\n\n        </div>\n\n    </div>\n</div>\n                </div>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab2\">\n                <h2>Proteja su Marca Online</h2>\n                <p>Evite que otros aprovechen su esfuerzo y buen nombre registrando su marca con LegalProm</p>\n                <p><strong>Desde $129.990</strong></p>\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">Seleccione Sociedad para comenzar:</h3>\n                    </div>\n                    <div class=\"panel-body\">\n                        <form action=\"/forms/login\" accept-charset=\"UTF-8\" method=\"post\" class=\"ng-pristine ng-valid\"><input name=\"utf8\" type=\"hidden\" value=\"✓\" autocomplete=\"off\"><input type=\"hidden\" name=\"authenticity_token\" value=\"ve6XAejZc30dRt9YPpgeHfj7z95M0d8dI9dVZtndr9IhXOt4/mF1WjyPwlScpgyCh4bkLKNzfyt5naNaG837Rw==\" autocomplete=\"off\">\n                            <div class=\"row form-group\">\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/establecimiento-comercial.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Establecimiento Comercial\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mec\">\n                                    </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/servicio.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Servicio\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_ms\">\n                                </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/producto.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Producto\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mp\">\n                                </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/establecimiento-industrial.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Establecimiento Industrial\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mei\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"first_name\" id=\"first_name\" class=\"form-control input-sm\" placeholder=\"Nombre\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"last_name\" id=\"last_name\" class=\"form-control input-sm\" placeholder=\"Apellido\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control input-sm\" placeholder=\"Email\">\n                            </div>\n                            <input type=\"submit\" name=\"commit\" value=\"Crear mi empresa\" class=\"btn btn-info btn-block\">\n\n                        </form>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab3\">\n                <h2>Modificación y Disolución Sociedades</h2>\n                <p>Concrete oportunidades adaptando sus negocios con velocidad y seguridad LegalProm</p>\n                <p><strong>Desde $44.990 y 24 hrs.</strong></p>\n                <a href=\"#\">Detalle Precio y Plazos</a>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab4\">\n                <h2>¿Busca un Abogado en Quien Confiar?</h2>\n                <p>Miles de clientes han confiado en LegalProm. Muchos huyendo de malos servicios, perdidas de tiempo y dinero.</p>\n            </div>\n        </div>\n\n    </div>\n\n\n\n    <div class=\"row press-quotes\">\n\n\n\n    </div>\n\n    <div class=\"line\">\n        <hr>\n    </div>\n\n    <div class=\"row steps\">\n        <h3>3 Sencillos Pasos</h3>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 1 - formulario online\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso1-formulario.jpg\"></center>\n            <h4>Responda un sencillo cuestionario en línea. No mas de 10 min.</h4>\n        </div>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 2 - generación y revisión de documentos\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso2-documentos.jpg\"></center>\n            <h4>Abogados revisarán sus respuestas y crearán sus documentos</h4>\n        </div>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 3 - Firma en notaria\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso3-firma.jpg\"></center>\n            <h4>Se firman y LegalProm se encarga del resto. Ud. ahorrará tiempo</h4>\n        </div>\n    </div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    <div class=\"line\">\n        <hr>\n    </div>\n\n\n\n\n\n\n\n    <div class=\"row\">\n        <div class=\"col-md-12 one-column-text\">\n            <h2 style=\"font-size:36px;\">Olvídese de Trámites y Complicaciones</h2>\n            <h3 style=\"font-size:24px;\">Déje sus asuntos en manos de nuestro equipo y ocupe su tiempo su negocio</h3>\n        </div>\n    </div>\n\n    <div class=\"row buttons-who-we-are\">\n        <div clas=\"col-md-6\">\n            <a class=\"btn btn-primary btn-lg\" style=\"float:left; width:30%;margin:10%; padding:30px;\">Registrar su marca</a>\n        </div>\n        <div clas=\"col-md-6\">\n            <a class=\"btn btn-info btn-lg\" style=\"float:right;width:30%; margin:10%; padding:30px;\">Crear su empresa</a>\n        </div>\n\n    </div>\n\n    <center><p>Miles de clientes felices y satisfechos desde 2012.</p></center>\n\n    <div class=\"row\" id=\"opinion-right\" style=\"background:url(http://legalprom.cl/wp-content/uploads/2014/05/ingeagro.jpg) no-repeat center;\">\n        <div class=\"col-md-6\"></div>\n        <div class=\"col-md-6\">\n            <h3>Sobresaliente servicio !</h3>\n            <p>Rosario Sepúlveda</p>\n            <p>Co-Fundadora de IngeAgro</p>\n            <p>Empresa creada con LegalProm</p>\n        </div>\n    </div>\n\n</div>\n";
+module.exports = "\n<body class=\"container-fluid index-section\">\n\t<div class=\"container\">\n\t\t<div class=\"row slider\" id=\"tabs-home\" style=\"\">\n\t\t\t<!-- tab content -->\n\n\n\t\t\t<div class=\"col-sm-12 tab-content container\" id=\"wea\">\n\t\t\t\t<div class=\"tab-pane active text-style fade in active container\" id=\"tab1\">\n\t\t\t\t\t<center>\n\t\t\t\t\t\t<h2>GRADEBOOK SOFTWARE <br>FOR THE MODERN TEACHER</h2>\n\n\t\t\t\t\t<p><strong>Made for teachers, by teachers!</strong></p><br>\n\t\t\t\t</center>\n\n\n\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t<div class=\"panel-heading\">\n\t\t\t\t\t\t\t<h3 class=\"panel-title\">\n\t\t\t\t\t\t\t</h3>\n\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t<div class=\"row features-home-right\">\n\t\t\t\t\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t\t\t\t\t<center>\n\t\t\t\t\t\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-clock-o fa-6\"></i>\n\t\t\t\t\t\t\t\t\t</center>\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<div class=\"col-md-7\">\n\t\t\t\t\t\t\t\t\t<div class=\"color\">\n\t\t\t\t\t\t\t\t\t\t<h3>Less Time Grading, More Time Teaching</h3>\n\n\t\t\t\t\t\t\t\t\t\t<h4>the most advanced grading software on market</h4>\n\n\t\t\t\t\t\t\t\t\t\t<p>Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software\n\t\t\t\t\t\t\t\t\t\ttakes the pain out of manual grade entry, assignment averaging and more!</p>\n\t\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<a class=\"btn btn-primary btn-lg\" href=\"#!/signup\" type=\"submit\">Sign Up Today!</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row press-quotes\">\n\t\t</div>\n\n\t\t<div class=\"row steps\">\n\t\t\t<h3 class=\"heading\">3 easy steps to get started!</h3>\n\t\t\t<br>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-user-plus fa-4\"></i>\n\n\t\t\t\t\t<h4>Sign Up</h4>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-laptop fa-4\"></i>\n\n\t\t\t\t\t<h4>Import Student Information</h4>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-pencil-square-o fa-4\"></i>\n\n\t\t\t\t\t<h4>Enter Grades Faster Than Ever</h4>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"row\">\n\t\t\t<div class=\"col-md-12 one-column-text\">\n\t\t\t\t<center>\n\t\t\t\t\t<h2 style=\"font-size:36px;\">Serving Individual Teachers</h2>\n\n\n\t\t\t\t\t<h3 style=\"font-size:24px;\">Individual Schools and Entire School Districts</h3>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row buttons-who-we-are\">\n\t\t\t<div>\n        <center>\n\t\t\t\t<a class=\"btn btn-primary btn-lg\" ui-sref=\"signup\" type=\"submit\">Teacher Registration</a>\n      </center>\n\t\t\t</div>\n\n\t\t</div>\n\n\t</div>\n</body>\n";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2>\n  <form class=\"form-group\" ui-sref=\"show({ userId:'58eb9129be29bd3c1a4c731e'})\">\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           required>\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           required>\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\" ui-sref=\"show({ userId:'58eb9129be29bd3c1a4c731e'})\" value=\"submit\">\n  </form><br>\n\n\n  <h6>First time? <a ui-sref=\"signup\">Start here.</a> </h6>\n\n    <!-- <input type=\"submit\" ui-sref=\"show({ userId:'58eb9129be29bd3c1a4c731e'})\" value=\"submit\">\n  </form> -->\n\n</div>\n";
+module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2>\n  <form ng-submit=\"$ctrl.loginUnauth()\"\n        class=\"form-group\"\n        name=\"loginForm\">\n        \n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\"\n           required>\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\"\n           required>\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <h6>First time? <a ui-sref=\"signup\">Start here.</a> </h6>\n\n\n</div>\n";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"show-section row\">\n  <h1>Welcome {{$ctrl.current.username}}</h1>\n <hr>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>Students</h4>\n\t\t  <p ng-repeat=\"student in $ctrl.current.students\">\n\t\t  {{student.lastName}}, {{student.firstName}}</p>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>Grades</h4>\n\t\t\t<p ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%\n\t\t\t</p>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</h4>\n\t\t\t<div ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t<input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\">\n\t\t\t</div>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</h4>\n\t\t\t<div ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t<input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\">\n\t\t\t</div>\n\t</div>\n</div>\n<div>\n  <div class=\"col-lg-12\">\n                      <div class=\"panel panel-default\">\n                          <div class=\"panel-heading\">\n                              DataTables Advanced Tables\n                          </div>\n                          <!-- /.panel-heading -->\n                          <div class=\"panel-body\">\n                              <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n                                  <thead>\n                                      <tr ng=\"student in $ctrl.current.students\">\n                                          <th>Students</th>\n                                          <th>Grades</th>\n                                          <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n                                          <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                                          <th>Delete</th>\n\n                                      </tr>\n                                  </thead>\n                                  <tbody>\n                                      <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                                          <td>{{student.lastName}}, {{student.firstName}}</td>\n                                          <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                                          <td>{{student.assignments[0].pointsEarned}}</td>\n                                          <td>{{student.assignments[1].pointsEarned}}</td>\n                                          <td class=\"center\">X</td>\n                                      </tr>\n\n                                  </tbody>\n                              </table>\n                              <!-- /.table-responsive -->\n                              <div class=\"well\">\n                                  <h4>DataTables Usage Information</h4>\n                                  <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target=\"_blank\" href=\"https://datatables.net/\">https://datatables.net/</a>.</p>\n                                  <a class=\"btn btn-default btn-lg btn-block\" target=\"_blank\" href=\"https://datatables.net/\">View DataTables Documentation</a>\n                              </div>\n                          </div>\n\n<br>\n\n\n\n\n\n\n\n<div>\n\n<input ui-sref=\"createAssignment({ userId:'58eb9129be29bd3c1a4c731e'})\" class=\"btn btn-default\" type=\"submit\" value=\"create new assignment\"> \n\n<!-- later try userId: $ctrl.current._id\n -->\n</div>\n<div class=\"show-footer\">\n  <hr>\n  <input ui-sref=\"createAssignment({ userId:'58eb9129be29bd3c1a4c731e'})\" class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n  <br>\n\n\n  <br>\n  <input ui-sref=\"home\" class=\"btn btn-default\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
+module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <h3>{{$ctrl.current.username}}'s Students</h3>\n    </div>\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n        <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n            <thead>\n                <tr ng=\"student in $ctrl.current.students\">\n                    <th>Students</th>\n                    <th>Grades</th>\n                    <th>{{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign()\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign()\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                    <td>{{student.lastName}}, {{student.firstName}}</td>\n                    <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\"\n                     ng-model=\"student.assignments[2].pointsEarned\"></td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n\n                </tr>\n            </tbody>\n        </table>\n\n    </div>\n\n  <br>\n  <div class=\"button-functions\">\n    <input ng-click=\"$ctrl.saveGrades()\" class=\"btn btn-warning\" type=\"submit\" value=\"Save Grades\">\n    <input ui-sref=\"createAssignment({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n    <input ng-click=\"$ctrl.addStudent()\" class=\"btn btn-default\" type=\"submit\" value=\"Add Student\">\n  </div>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-danger\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
 
 /***/ }),
 /* 23 */

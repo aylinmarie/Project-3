@@ -7,12 +7,10 @@ function CreateAssignmentController($stateParams, UsersService) {
   vm.addNewAssignment = addNewAssignment; //attaching the function to vm
   vm.newAssignment = {};                  //initializing newAssignment
   vm.current = {};
-  vm.updatedStudents = {};
-  
+ 
   activate();
 
-  function activate() {
-  	
+  function activate() {	
   }
 
   function addNewAssignment() {

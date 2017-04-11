@@ -3,10 +3,8 @@ ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
 function ShowController($stateParams, $scope, UsersService) {
   const vm = this;
   vm.current = {};
-  vm.user = [];
-  vm.studentsGrades = [];
-  vm.deleteUser = deleteUser;
-
+  vm.deleteAssign = deleteAssign;
+  vm.saveGrades = saveGrades;
 
   activate();
 
@@ -15,13 +13,41 @@ function ShowController($stateParams, $scope, UsersService) {
   }
 
   function loadCurrent(userId) {
-  	console.log($stateParams);
 
   	UsersService
   		.loadCurrent($stateParams.userId)
   		.then(function resolve(response) {
   			vm.current = response.data.user;
   		})
+  }
+
+  function deleteAssign() {
+    console.log("an assignmentName: " + vm.current._id);
+    console.log("delete: " + vm.current.students[0].assignments[1].name);
+
+    UsersService
+      .deleteAssignment(
+        vm.current._id,
+        vm.current.students[0].assignments[1].name
+      ).then(function resolve(response) {
+        console.log("back from the server!")
+        vm.current = response.data.user
+        console.log("new user: " + vm.current);
+      });
+  }
+
+  function saveGrades() {
+    console.log("Save grade function called" + vm.current._id);
+
+    UsersService
+      .saveNewGrade(
+        vm.current._id,
+        vm.current
+      ).then(function resolve(response) {
+        console.log("back from the server");
+        vm.current = response.data.user;
+      });
+
   }
 
   $scope.getSumPointsEarned = function(student){
@@ -35,23 +61,12 @@ function ShowController($stateParams, $scope, UsersService) {
 
   $scope.getSumPointsMax = function(student){
       var total = Number(0);
-      for(var i = 0; i < 2; i++){
+      for(var i = 0; i < student.assignments.length; i++){
           var points = Number(student.assignments[i].pointsMax);
           total += points;
       }
       return total;
   }
-
-  function deleteUser(user){
-  UsersService
-    .deleteUser(user)
-    .then(function(response){
-      console.log("Deleted");
-      // var index = vm.user.indexOf(user);
-      // vm.user.splice(index, 1);
-   });
-}
-
 }
 
 module.exports = ShowController;

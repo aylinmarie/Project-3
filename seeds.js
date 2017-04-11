@@ -33,27 +33,27 @@ var testStudents = [
 
 
 var users = [ {
-  	username: 'TestWoman',
+  	username: 'Ms. Peddington',
   	email: 'abc@abc.com',
   	password: 'abc',
   	students: testStudents
 	},
 	{
-	  	username: 'TestMan',
-	  	email: 'abc@abc.com',
-	  	password: 'abc',
+	  	username: 'Mr. Hernquist',
+	  	email: '123@123.com',
+	  	password: '123',
 	  	students: testStudents
 	  	}  ];
 
-// User.remove({})
-//   .then(function(){
-//   	return User.create(users);
-//   })
-//   .then(function(users){
-//   	console.log(users);
-//   })
-//   .then(function(){
-//   	mongoose.connection.close(function () {
-//   	  console.log('Mongoose connection disconnected');
-//   	});
-//   });
+User.remove({})
+  .then(function(){
+  	return User.create(users);
+  })
+  .then(function(users){
+  	console.log(users);
+  })
+  .then(function(){
+  	mongoose.connection.close(function () {
+  	  console.log('Mongoose connection disconnected');
+  	});
+  });

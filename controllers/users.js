@@ -5,10 +5,8 @@ var methodOverride = require('method-override');
 var User = require('../models/user');
 var Student = require('../models/student');
 var Assignment = require('../models/assignment');
-var logger = require('morgan'); /*---this caused an error with GET*/
-//var methodOverride = require('method-override');
+var logger = require('morgan');
 var User = require('../models/User');
-
 
 
 //=============================
@@ -27,61 +25,33 @@ router.get('/:id', function showAction(request, response) {
 
 
 //======================
-// USER REGISTRATION
+// CREATE ASSIGNMENT
 //======================
-router.post('/', function createUser(req, res){
-	console.log('body:',request.body);
-
-  var user = new User(request.body);
-
-  user.save(function(error) {
-    if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
-
-    response.json({user: user});
-  });
-});
-
-
 router.put('/:id', function updateAction(request, response) {
-
-  console.log ('I made it to the put');
 
   var newAssignment = new Assignment({
     name: request.body.name,
     assignmentType: request.body.assignmentType,
-    pointsMax: request.body.pointsMax
+		dateCreated: {},
+    pointsEarned: 0,
+    pointsMax: request.body.pointsMax,
   });
-  console.log(newAssignment);
 
-
-  var id = request.params.id
+  var id = request.params.id;
 
   User.findById((id), function(error, user) {
-    console.log("findbyid user" + user);
+    console.log("findbyid user " + user);
   }).exec(function(error, user) {
+    console.log("from users.js user:" + user);
     user.students.forEach(function(student) {
       student.assignments.push(newAssignment);
 
     });
   user.save();
+  response.json({user:user})
   })
-
-  
 });
 
-
-
-//=============================
-// Delete User
-//=============================
-router.delete('/:id', function destroyAction(request, response) {
-  var id = request.params.id;
-
-  User.remove({_id: id}, function(error) {
-    if(error) response.json({message: 'Could not delete criminal b/c:' + error});
-
-    response.json({message: 'Criminal successfully deleted'});
-  });
-});
 
 module.exports = router;
+
