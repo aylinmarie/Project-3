@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var User = require('../models/user');
 var Student = require('../models/student');
 var Assignment = require('../models/assignment');
 var logger = require('morgan');
