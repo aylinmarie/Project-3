@@ -7,10 +7,10 @@ function CreateAssignmentController($stateParams, UsersService) {
   vm.addNewAssignment = addNewAssignment; //attaching the function to vm
   vm.newAssignment = {};                  //initializing newAssignment
   vm.current = {};
- 
+
   activate();
 
-  function activate() {	
+  function activate() {
   }
 
   function addNewAssignment() {
@@ -20,9 +20,9 @@ function CreateAssignmentController($stateParams, UsersService) {
     console.log("userID" + $stateParams.userId);
     UsersService
       .addAssignment(
-        $stateParams.userId, 
-        vm.newAssignment.name, 
-        vm.newAssignment.assignmentType, 
+        $stateParams.userId,
+        vm.newAssignment.name,
+        vm.newAssignment.assignmentType,
         vm.newAssignment.pointsMax
       ).then(function resolve(response) {
         console.log("function working!")
@@ -30,8 +30,7 @@ function CreateAssignmentController($stateParams, UsersService) {
         console.log("Back from the server!" + vm.current);
       });
   }
-}
- 
-module.exports = CreateAssignmentController;
 
-      
+}
+
+module.exports = CreateAssignmentController;
