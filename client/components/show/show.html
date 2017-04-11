@@ -16,15 +16,13 @@
                     <th>Grades</th>
                     <th>{{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>
 
-                    <!-- <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}
-                      <button ng-click="$ctrl.deleteAssign()" class="btn btn-default">X</button>
-                    </th> -->
-
                     <th>
                       <input style="font-size: 9px" ng-click="$ctrl.deleteAssign()" class="btn btn-default" type="submit" value="X - Remove"><br>
                       {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>
 
-                    <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>
+                    <th>
+                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign()" class="btn btn-default" type="submit" value="X - Remove"><br>
+                      {{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,14 +41,15 @@
     </div>
 
   <br>
-  <div class="new-assignment">
+  <div class="button-functions">
     <input ng-click="$ctrl.saveGrades()" class="btn btn-warning" type="submit" value="Save Grades">
     <input ui-sref="createAssignment({ userId:$ctrl.current._id })" class="btn btn-default" type="submit" value="Add Assignment">
+    <input ng-click="$ctrl.addStudent()" class="btn btn-default" type="submit" value="Add Student">
   </div>
 
 </div>
 <div class="show-footer">
 
-  <input ui-sref="home" class="btn btn-default" type="submit" value="Log Out">
+  <input ui-sref="home" class="btn btn-danger" type="submit" value="Log Out">
 
 </div>
