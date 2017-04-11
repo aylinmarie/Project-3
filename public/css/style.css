@@ -4,7 +4,7 @@ body, .container-fluid {
   padding: 0px;
   margin: 0 auto;
   width: 100%;
-  background-color: rgb(255, 113, 91);
+  background-color: #eee;
 }
 
 .container {
@@ -55,6 +55,11 @@ small {
     border-color: #2e527c;
 }
 
+.btn-info {
+    color: #fff;
+    background-color: #ff715b;
+    border-color: #ff715b;
+}
 /*HEADER*/
 .brand {
   text-align: left;
