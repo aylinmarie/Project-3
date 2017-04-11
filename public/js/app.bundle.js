@@ -103,7 +103,34 @@ module.exports = CreateAssignmentController;
 /* 1 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Aylin/GA/project-3/client/components/delete.assignment/delete.controller.js'");
+DeleteAssignmentController.$inject = ['$stateParams', 'UsersService'];
+
+function DeleteAssignmentController($stateParams, UsersService) {
+  const vm = this;
+
+  console.log(vm.routingId);
+  vm.deleteAssign = deleteAssign; //attaching the function to vm
+  //initializing newAssignment
+  console.log("Made to deleteAssignment 1:" + $stateParams.assignmentNumber);
+
+  activate();
+
+  function activate() {
+    deleteAssign();
+  }
+
+  function deleteAssign(userId, assignmentName) {
+    console.log("an assignmentName:" + assignmentName);
+    console.log("delete " + userId);
+    UsersService.deleteAssignment(userId, assignmentName).then(function resolve(response) {
+      console.log("back from the server!");
+      vm.current = response.data.user; //not sure this is necessary
+      console.log("new user: " + vm.current);
+    });
+  }
+}
+
+module.exports = DeleteAssignmentController;
 
 /***/ }),
 /* 2 */
@@ -284,9 +311,17 @@ angular.module('gradeBook').component('createAssignment', component);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Aylin/GA/project-3/client/components/delete.assignment/delete.component.js'");
+const controller = __webpack_require__(1);
+const template = __webpack_require__(19);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('gradeBook').component('deleteAssignment', component);
 
 /***/ }),
 /* 9 */
@@ -38492,7 +38527,12 @@ module.exports = angular;
 module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div> \n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div><br>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
-/* 19 */,
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = "<h2>Delete accomplished!</h2>>\n<input ui-sref=\"show({ userId: $ctrl.routingId })\" class=\"btn btn-default\" type=\"submit\" value=\"Back To Grades\">\n\n\n\n";
+
+/***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
