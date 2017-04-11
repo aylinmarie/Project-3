@@ -9,7 +9,7 @@ function UsersService($http) {
 
 		self.loadCurrent = loadCurrent;
 		self.addAssignment = addAssignment;
-		self.addNewUser = addNewUser;
+		self.signupUser = signupUser;
 		self.deleteAssignment = deleteAssignment;
 		self.saveNewGrade = saveNewGrade;
 
@@ -25,9 +25,14 @@ function UsersService($http) {
 				pointsMax: pointsMax});
 	}
 
-	function addNewUser(id) {
-		return $http
-			.post('/api/users/', newUser);
+	function signupUser(email, username, password) {
+		console.log('password' + password)
+		return $http	
+			.post('/api/users/', {
+				email: email,
+				username: username,
+				password: password
+			});
 	}
 
 	function deleteAssignment(id, assignmentName) {

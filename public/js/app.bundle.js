@@ -237,25 +237,27 @@ module.exports = ShowController;
 /* 5 */
 /***/ (function(module, exports) {
 
-SignupController.$inject = [];
+SignupController.$inject = ['$state', 'UsersService'];
 
-function SignupController() {
+function SignupController($state, UsersService) {
   const vm = this;
-
+  vm.current = {};
   vm.addNewUser = addNewUser;
-  vm.newUser = {};
 
   activate();
 
   function activate() {}
 
   function addNewUser() {
-    UsersService.addNewUser(vm.newUser).then(function () {
+
+    console.log('Signup Controller' + vm.newUser.username);
+    UsersService.signupUser(vm.newUser.email, vm.newUser.username, vm.newUser.password).then(function resolve(response) {
+      console.log('Back from server');
       vm.newUser = {};
-      $state.go('show');
+      $state.go('login');
     });
   }
-}
+};
 
 module.exports = SignupController;
 
@@ -412,7 +414,7 @@ function UsersService($http) {
 
 	self.loadCurrent = loadCurrent;
 	self.addAssignment = addAssignment;
-	self.addNewUser = addNewUser;
+	self.signupUser = signupUser;
 	self.deleteAssignment = deleteAssignment;
 	self.saveNewGrade = saveNewGrade;
 
@@ -427,8 +429,13 @@ function UsersService($http) {
 			pointsMax: pointsMax });
 	}
 
-	function addNewUser(id) {
-		return $http.post('/api/users/', newUser);
+	function signupUser(email, username, password) {
+		console.log('password' + password);
+		return $http.post('/api/users/', {
+			email: email,
+			username: username,
+			password: password
+		});
 	}
 
 	function deleteAssignment(id, assignmentName) {
@@ -38554,7 +38561,7 @@ module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"co
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"signup-section container-fluid\">\n  <h2>Signup</h2>\n\n  <form ng-submit=\"$ctrl.addNewUser()\" class=\"form-group\" method=\"post\">\n    <label>Email:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.email\" name=\"email\"><br>\n\n    <label>Password</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.password\" name=\"password\"><br>\n\n    <input class=\"btn btn-primary\" type=\"submit\" ui-sref=\"login\" value=\"Submit\">\n  </form>\n  <br>\n\n  <h6>Already have an account? <a ui-sref=\"login\">Log in here.</a> </h6>\n\n</div>\n\n<div>\n  <li ng-repeat=\"user in $ctrl.current\">\n    <p>{{$ctrl.username}}</p>\n  <button ng-click=\"$ctrl.deleteUser(user)\" class=\"btn btn-warning\">Delete Assignment</button>\n  </li>\n</div>\n";
+module.exports = "<div class=\"signup-section container-fluid\">\n  <h2>Signup</h2>\n\n  <form ng-submit=\"$ctrl.addNewUser()\" class=\"form-group\" id=\"newUser\">\n    <label>Email:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.email\" name=\"email\"><br>\n\n    <label>Username:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.username\" name=\"username\"><br>\n\n    <label>Password</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.password\" name=\"password\"><br>\n\n    <input class=\"btn btn-primary\" type=\"submit\" \n     value=\"Submit\"> \n  </form>\n  <br>\n\n  <h6>Already have an account? <a ui-sref=\"login\">Log in here.</a> </h6>\n\n</div>\n\n<!-- <div>\n  <li ng-repeat=\"user in $ctrl.current\">\n    <p>{{$ctrl.username}}</p>\n  <button ng-click=\"$ctrl.deleteUser(user)\" class=\"btn btn-warning\">Delete Assignment</button>\n  </li>\n</div>\n -->";
 
 /***/ }),
 /* 24 */

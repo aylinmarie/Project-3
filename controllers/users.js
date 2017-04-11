@@ -6,7 +6,7 @@ var User = require('../models/user');
 var Student = require('../models/student');
 var Assignment = require('../models/assignment');
 var logger = require('morgan');
-var User = require('../models/User');
+
 
 
 //=============================
@@ -52,6 +52,43 @@ router.put('/:id', function updateAction(request, response) {
   })
 });
 
+//signup
+
+router.post('/', function newUser(request, response) {
+  console.log('We hit the BE server');
+
+  var user = new User({
+    email: request.body.email,
+    username: request.body.username,
+    password: request.body.password,
+  });
+  console.log('we have' + user)
+  user.save(function(error) {
+  if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
+  
+  response.json({user: user});
+  })
+
+})
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
