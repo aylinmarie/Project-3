@@ -3,9 +3,10 @@ ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
 function ShowController($stateParams, $scope, UsersService) {
   const vm = this;
   vm.current = {};
+  vm.user = [];
   vm.studentsGrades = [];
 
-  
+
   activate();
 
   function activate() {
@@ -38,8 +39,9 @@ function ShowController($stateParams, $scope, UsersService) {
           total += points;
       }
       return total;
-  } 
-  
+  }
+
+
 }
 
 module.exports = ShowController;

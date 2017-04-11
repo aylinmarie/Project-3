@@ -1,12 +1,12 @@
 <div class="signup-section container-fluid">
   <h2>Signup</h2>
 
-  <form class="form-group" method="post">
+  <form ng-submit="$ctrl.addNewUser()" class="form-group" method="post">
     <label>Email:</label>
-    <input class="form-control" type="text" name="email"><br>
+    <input class="form-control" type="text" ng-model="$ctrl.newUser.email" name="email"><br>
 
     <label>Password</label>
-    <input class="form-control" type="text" name="password"><br>
+    <input class="form-control" type="text" ng-model="$ctrl.newUser.password" name="password"><br>
 
     <input class="btn btn-primary" type="submit" ui-sref="login" value="Submit">
   </form>
@@ -14,4 +14,11 @@
 
   <h6>Already have an account? <a ui-sref="login">Log in here.</a> </h6>
 
+</div>
+
+<div>
+  <li ng-repeat="user in $ctrl.current">
+    <p>{{$ctrl.username}}</p>
+  <button ng-click="$ctrl.deleteUser(user)" class="btn btn-warning">Delete Assignment</button>
+  </li>
 </div>

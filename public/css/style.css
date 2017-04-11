@@ -6,6 +6,12 @@ body, .container-fluid {
   width: 100%;
 }
 
+small {
+  text-transform: uppercase;
+  font-size: 8px;
+  letter-spacing: .1em;
+}
+
 
 /*HEADER*/
 .brand {
@@ -22,6 +28,22 @@ body, .container-fluid {
 .signup-section, .login-section {
   min-width: 300px;
   max-width: 300px;
+  text-align: center;
+}
+
+/*DASHBOARD*/
+.new-assignment {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.new-assignment {
+  text-align: center;
+}
+
+.create {
+  min-width: 350px;
+  max-width: 350px;
   text-align: center;
 }
 
