@@ -39,12 +39,12 @@ router.get('/:id', function showAction(request, response) {
 //   });
 // });
 
+
+
 //======================
 // CREATE ASSIGNMENT
 //======================
 router.put('/:id', function updateAction(request, response) {
-
-  console.log ('I made it to the put');
 
   var newAssignment = new Assignment({
     name: request.body.name,
@@ -53,10 +53,8 @@ router.put('/:id', function updateAction(request, response) {
     pointsEarned: 0,
     pointsMax: request.body.pointsMax,
   });
-  console.log(newAssignment);
 
-
-  var id = request.params.id
+  var id = request.params.id;
 
   User.findById((id), function(error, user) {
     console.log("findbyid user " + user);
@@ -70,19 +68,21 @@ router.put('/:id', function updateAction(request, response) {
   })
 });
 
+//======================
+// DELETE ASSIGNMENT
+//======================
 
-
-//=============================
-// Delete User
-//=============================
-router.delete('/:id', function destroyAction(request, response) {
-  var id = request.params.id;
-
-  User.remove({_id: id}, function(error) {
-    if(error) response.json({message: 'Could not delete criminal b/c:' + error});
-
-    response.json({message: 'Criminal successfully deleted'});
+router.delete('/:assignmentNumber', function deleteAction(request, response) {
+  var newAssignment = new Assignment({
+    name: ""
   });
+  console.log("I'm in delete router 1:" + request.params.assignmentNumber);
+
+  var assignmentNumber = request.params.assignmentNumber;
+
+  
 });
+
+
 
 module.exports = router;

@@ -10,8 +10,8 @@ function UsersService($http) {
 		self.loadCurrent = loadCurrent;
 		self.addAssignment = addAssignment;
 		self.addNewUser = addNewUser;
-		self.deleteUser = deleteUser;
-
+/*		self.deleteUser = deleteUser;
+*/		self.deleteAssignment = deleteAssignment;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -26,13 +26,22 @@ function UsersService($http) {
 	}
 
 	function addNewUser(id) {
-		return $http.post('/api/users/', newUser);
+		return $http
+			.post('/api/users/', newUser);
+	}
+
+	function deleteAssignment(id, assignmentNumber) {
+		console.log("Services 1:" + assignmentNumber);
+		return $http
+			.put('/api/users/' + id, {
+				assignmentNumber: assignmentNumber});
 	}
 
 
-	function deleteUser(user) {
+
+	/*function deleteUser(user) {
 		console.log("My user id is not working");
 		return $http.delete('/api/users/' + user._id);
 
-	}
+	}*/
 }

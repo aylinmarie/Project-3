@@ -3,9 +3,6 @@ ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
 function ShowController($stateParams, $scope, UsersService) {
   const vm = this;
   vm.current = {};
-  vm.user = [];
-  vm.studentsGrades = [];
-
 
   activate();
 
@@ -14,7 +11,6 @@ function ShowController($stateParams, $scope, UsersService) {
   }
 
   function loadCurrent(userId) {
-  	console.log($stateParams);
 
   	UsersService
   		.loadCurrent($stateParams.userId)
@@ -40,8 +36,7 @@ function ShowController($stateParams, $scope, UsersService) {
       }
       return total;
   }
-
-
 }
 
 module.exports = ShowController;
+
