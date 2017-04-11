@@ -180,8 +180,17 @@ th .btn {
 
 .create {
   min-width: 350px;
-  max-width: 350px;
+  max-width: 400px;
   text-align: center;
+}
+
+.alert button {
+  margin: 5px;
+  border-radius: 20px;
+  background: white;
+  border-color: #456990;
+  color: #456990;
+  font-size: 10px;
 }
 
 

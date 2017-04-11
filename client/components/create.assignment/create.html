@@ -1,6 +1,10 @@
 <div class="create container-fluid">
 
-
+  <div class="alert alert-success alert-dismissable fade in" ng-show="mySubmit">
+    <a onclick="history.go(0)" VALUE="Refresh" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <h5><strong>Success!</strong> You have added a new assignment. </h5>
+    <button onclick="history.go(0)" type="button" name="button" class="btn btn-default"> Add Another</button>
+  </div>
 
    <h1>Add Assignment</h1><br>
 	<form ng-submit="$ctrl.addNewAssignment()" class="form-group" id="newAssignment">
@@ -8,32 +12,26 @@
 		<label for="newAssignment-name">Name: </label>
 		<input class="form-control" type="text"
 		    ng-model="$ctrl.newAssignment.name"
-		    placeholder="put a name here...">
-	</div>
+		    placeholder="Name of assignment...">
+	</div><br>
 	<div>
 	    <label for="newAssignment-assignmentType">Assignment Type: </label>
 	    <input class="form-control" type="text"
 	    	ng-model="$ctrl.newAssignment.assignmentType"
-	    	placeholder="test... quiz... project...">
-	</div>
+	    	placeholder="Test... Quiz... Project...">
+	</div><Br>
 	<div>
 	    <label for="newAssignment-pointsMax">Max Points: </label>
 	    <input class="form-control" type="text"
 	    	ng-model="$ctrl.newAssignment.pointsMax"
-	    	placeholder="points...">
+	    	placeholder="Number of points...">
 	</div><br>
 
     <div>
       <input class="btn btn-primary" type="submit" value="Add Assignment" ng-click="mySubmit=true">
-    </div><br>
+    </div>
   </form>
 
-  <div class="alert alert-success alert-dismissable fade in" ng-show="mySubmit">
-    <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> You have added a new assignment.
-  </div>
-
-<div>
 	<input onclick="history.back(-1)" class="btn btn-default" type="submit" value="Go Back">
-</div>
+
 </div>
