@@ -48,6 +48,7 @@ router.put('/:id', function updateAction(request, response) {
 
     });
   user.save();
+  response.json({user:user})
   })
 });
 

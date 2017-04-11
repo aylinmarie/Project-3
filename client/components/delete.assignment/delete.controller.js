@@ -2,7 +2,8 @@ DeleteAssignmentController.$inject = ['$stateParams', 'UsersService'];
 
 function DeleteAssignmentController($stateParams, UsersService) {
   const vm = this;
-
+  
+  console.log(vm.routingId);
   vm.deleteAssign = deleteAssign; //attaching the function to vm
                                      //initializing newAssignment
   console.log("Made to deleteAssignment 1:" + $stateParams.assignmentNumber);
@@ -13,13 +14,13 @@ function DeleteAssignmentController($stateParams, UsersService) {
     deleteAssign();
   }
 
-  function deleteAssign() {
-    console.log("an 1:" + $stateParams.assignmentName);
-    console.log("delete " + $stateParams.userId);
+  function deleteAssign(userId, assignmentName) {
+    console.log("an assignmentName:" + assignmentName);
+    console.log("delete " + userId);
     UsersService
       .deleteAssignment(
-        $stateParams.userId,
-        $stateParams.assignmentName
+        userId,
+        assignmentName
       ).then(function resolve(response) {
         console.log("back from the server!")
         vm.current = response.data.user //not sure this is necessary
