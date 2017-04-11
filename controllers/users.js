@@ -9,9 +9,6 @@ var logger = require('morgan');
 var User = require('../models/User');
 
 
-
-
-
 //=============================
 // Show Page (User Logged In)
 //=============================
@@ -30,17 +27,17 @@ router.get('/:id', function showAction(request, response) {
 //======================
 // USER REGISTRATION
 //======================
-router.post('/', function createUser(req, res){
-	console.log('body:',request.body);
-
-  var user = new User(request.body);
-
-  user.save(function(error) {
-    if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
-
-    response.json({user: user});
-  });
-});
+// router.post('/', function createUser(req, res){
+// 	console.log('body:',request.body);
+//
+//   var user = new User(request.body);
+//
+//   user.save(function(error) {
+//     if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
+//
+//     response.json({user: user});
+//   });
+// });
 
 //======================
 // CREATE ASSIGNMENT
@@ -70,8 +67,6 @@ router.put('/:id', function updateAction(request, response) {
     });
   user.save();
   })
-
-
 });
 
 
