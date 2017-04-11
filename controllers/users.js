@@ -23,7 +23,6 @@ router.get('/:id', function showAction(request, response) {
 	});
 });
 
-<<<<<<< HEAD
 
 //======================
 // USER REGISTRATION
@@ -72,7 +71,7 @@ router.put('/:id', function updateAction(request, response) {
 
 
 module.exports = router;
-=======
+
 router.put('/:id', function (req, res){
 
 	var updatedStudents = req.body.students //must be an arrays of students with
@@ -99,4 +98,4 @@ router.put('/:id', function (req, res){
 });
 
 module.exports = router;
->>>>>>> david
+
