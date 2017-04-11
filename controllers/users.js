@@ -23,29 +23,11 @@ router.get('/:id', function showAction(request, response) {
 	});
 });
 
-<<<<<<< HEAD
-
-//======================
-// USER REGISTRATION
-//======================
-// router.post('/', function createUser(req, res){
-// 	console.log('body:',request.body);
-//
-//   var user = new User(request.body);
-//
-//   user.save(function(error) {
-//     if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
-//
-//     response.json({user: user});
-//   });
-// });
 
 //======================
 // CREATE ASSIGNMENT
 //======================
 router.put('/:id', function updateAction(request, response) {
-
-  console.log ('I made it to the put');
 
   var newAssignment = new Assignment({
     name: request.body.name,
@@ -54,14 +36,13 @@ router.put('/:id', function updateAction(request, response) {
     pointsEarned: 0,
     pointsMax: request.body.pointsMax,
   });
-  console.log(newAssignment);
 
-
-  var id = request.params.id
+  var id = request.params.id;
 
   User.findById((id), function(error, user) {
-    console.log("findbyid user" + user);
+    console.log("findbyid user " + user);
   }).exec(function(error, user) {
+    console.log("from users.js user:" + user);
     user.students.forEach(function(student) {
       student.assignments.push(newAssignment);
 
@@ -71,46 +52,5 @@ router.put('/:id', function updateAction(request, response) {
 });
 
 
-
-//=============================
-// Delete User
-//=============================
-router.delete('/:id', function destroyAction(request, response) {
-  var id = request.params.id;
-
-  User.remove({_id: id}, function(error) {
-    if(error) response.json({message: 'Could not delete criminal b/c:' + error});
-
-    response.json({message: 'Criminal successfully deleted'});
-  });
-});
-
 module.exports = router;
-=======
-router.put('/:id', function (req, res){
 
-	var updatedStudents = req.body.students //must be an arrays of students with
-													//the new assignemnts
-
-	User.findByIdAndUpdate(req.params.id, {
-		students: updatedStudents //or just req.body.students
-	})
-  /*var writers = [req.body.favorite1, req.body.favorite2, req.body.favorite3];
-  var books = [req.body.book1, req.body.book2, req.body.book3];
-
-  User.findByIdAndUpdate(req.params.id, {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    favoriteWriters: writers,
-    favoriteBooks: books
-  }, {new: true})
-  .exec(function(err, user) {
-    if (err) { console.log(err); }
-
-    console.log(user);
-    res.redirect('/users');
-  });*/
-});
-
-module.exports = router;
->>>>>>> david

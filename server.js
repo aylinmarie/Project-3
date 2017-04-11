@@ -24,6 +24,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var usersController = require('./controllers/users.js');
 app.use('/api/users', usersController);
 
+var deleteController = require('./controllers/delete.js');
+app.use('/api/delete', deleteController);
+
 var sessionsController = require('./controllers/sessions.js');
 app.use('/api/sessions', sessionsController);
 

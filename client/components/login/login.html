@@ -1,11 +1,15 @@
 <div class="login-section container-fluid">
   <h2>Login</h2>
-  <form ng-submit="$ctrl.loginUnauth()" class="form-group">
+  <form ng-submit="$ctrl.loginUnauth()"
+        class="form-group"
+        name="loginForm">
+        
     <label>Email:</label>
     <input class="form-control"
            type="text"
            name="email"
-           ng-model="$ctrl.login.email">
+           ng-model="$ctrl.login.email"
+           required>
            <small><div style="color: grey" ng-message="required">Email is required</div></small>
            <br>
 
@@ -13,7 +17,8 @@
     <input class="form-control"
            type="text"
            name="password"
-           ng-model="$ctrl.login.password">
+           ng-model="$ctrl.login.password"
+           required>
     <small><div style="color: grey" ng-message="required">Password is required</div></small>
     <br>
 
@@ -25,4 +30,3 @@
 
 
 </div>
-<!-- ui-sref="show({ userId: userId})" -->

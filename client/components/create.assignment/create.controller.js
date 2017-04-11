@@ -8,11 +8,9 @@ function CreateAssignmentController($stateParams, UsersService) {
   vm.newAssignment = {};                  //initializing newAssignment
   vm.current = {};
  
-  
   activate();
 
-  function activate() {
-  	
+  function activate() {	
   }
 
   function addNewAssignment() {
