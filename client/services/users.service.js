@@ -30,13 +30,12 @@ function UsersService($http) {
 			.post('/api/users/', newUser);
 	}
 
-	function deleteAssignment(id, assignmentNumber) {
-		console.log("Services 1:" + assignmentNumber);
+	function deleteAssignment(id, assignmentName) {
+		console.log("Services 1:" + assignmentName);
 		return $http
-			.put('/api/users/' + id, {
-				assignmentNumber: assignmentNumber});
+			.put('/api/delete/' + id, {
+				assignmentName: assignmentName});
 	}
-
 
 
 	/*function deleteUser(user) {
