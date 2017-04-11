@@ -5,6 +5,7 @@ body, .container-fluid {
   margin: 0 auto;
   width: 100%;
   background-color: #eee;
+  font-family: 'Lato', sans-serif;
 }
 
 .container {
@@ -25,28 +26,16 @@ body, .container-fluid {
   padding-right: 60px;
 }
 
-.heading{
-  text-align: center;
-}
-
 small {
   text-transform: uppercase;
-  font-size: 8px;
+  font-size: 9.5px;
   letter-spacing: .1em;
 }
-.row {
-    margin-right: -15px;
-    margin-left: -15px;
-    padding-left: 10px;
-}
-.fa-6 {
-    font-size: 20em !important;
-    color: #ff715b;
-}
 
-.fa-4 {
-    font-size: 10em !important;
-    color: #2e527c;
+.btn {
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin: 30px 0px 30px 0px;
 }
 
 .btn-primary {
@@ -60,17 +49,34 @@ small {
     background-color: #ff715b;
     border-color: #ff715b;
 }
+
+.btn-lg {
+  padding: 20px 50px 20px 50px;
+  border-radius: 40px;
+}
+
+.fa:hover {
+  color: #ff715b;
+}
+
+.btn-lg:hover {
+  background-color: transparent;
+  color: #ff715b;
+  border-color: #ff715b;
+}
+
+th {
+  text-align: center;
+}
+
+th .btn {
+  margin: 10px;
+}
+
 /*HEADER*/
 .brand {
   text-align: left;
    padding-left: 60px;
-}
-
-.signup-section h2, .login-section h2{
-    min-width: 300px;
-    max-width: 100px;
-    text-align: center;
-    color: white;
 }
 
 
@@ -92,16 +98,46 @@ small {
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    font-family: inherit;
     font-weight: 500;
+    letter-spacing: .04em;
     line-height: 1.1;
     color: #456990;
 }
+
+ h4, h5, h6, .h4, .h5, .h6 {
+   text-transform: uppercase;
+ }
+
 .steps{
   background-color:rgb(245, 245, 245);
   padding-bottom: 40px;
 
 }
+
+/*MAIN PAGE*/
+.index-section {
+  text-align: center;
+}
+
+.heading{
+  text-align: center;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    padding-left: 10px;
+}
+.fa-6 {
+    font-size: 20em !important;
+    color: #ff715b;
+}
+
+.fa-4 {
+    font-size: 10em !important;
+    color: #2e527c;
+}
+
 /*SIGN UP and LOGIN PAGE*/
 .signup-section, .login-section {
   min-width: 300px;
@@ -109,7 +145,10 @@ small {
   text-align: center;
 }
 
+
 /*DASHBOARD*/
+
+
 .new-assignment {
   text-align: center;
   padding-bottom: 30px;
@@ -125,7 +164,12 @@ small {
   text-align: center;
 }
 
-/*DASHBOARD FOOTER*/
+/*FOOTER*/
 .show-footer {
   text-align: center;
+}
+
+.foot, .foot small {
+  text-align: center;
+  font-size: 11px;
 }

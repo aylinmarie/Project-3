@@ -20,6 +20,10 @@
                       <button ng-click="$ctrl.deleteAssign()" class="btn btn-default">X</button>
                     </th>
 
+                    <th>
+                      <input style="font-size: 9px" ng-submit="$ctrl.deleteAssign()" ui-sref="deleteAssignment({ userId: $ctrl.current._id, assignmentName: $ctrl.current.students[0].assignments[1].name })" class="btn btn-default" type="submit" value="X - Remove"><br>
+                      {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>
+
                     <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>
                 </tr>
             </thead>
@@ -31,7 +35,7 @@
                      ng-model="student.assignments[2].pointsEarned"></td>
                     <td><input type="number" name="points-earned" min="0" ng-model="student.assignments[1].pointsEarned"></td>
                     <td><input type="number" name="points-earned" min="0" ng-model="student.assignments[0].pointsEarned"></td>
-                    
+
                 </tr>
             </tbody>
         </table>
