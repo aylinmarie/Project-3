@@ -116,9 +116,9 @@ module.exports = HomeController;
 /* 2 */
 /***/ (function(module, exports) {
 
-LoginController.$inject = ['AuthService'];
+LoginController.$inject = ['$state', 'AuthService'];
 
-function LoginController(AuthService) {
+function LoginController($state, AuthService) {
   const vm = this;
 
   vm.loginUnauth = loginUnauth;
@@ -128,8 +128,7 @@ function LoginController(AuthService) {
     console.log("Hit login button");
     AuthService.loginUser(vm.login.email, vm.login.password).then(function resolve(response) {
       console.log("function working");
-      vm.current = response.data.user;
-      console.log("the user id is" + current.userId);
+      $state.go("show", { userId: response.data });
     });
   }
 }
@@ -147,7 +146,6 @@ function ShowController($stateParams, $scope, UsersService) {
     vm.current = {};
     vm.user = [];
     vm.studentsGrades = [];
-    vm.deleteUser = deleteUser;
 
     activate();
 
@@ -180,14 +178,6 @@ function ShowController($stateParams, $scope, UsersService) {
         }
         return total;
     };
-
-    function deleteUser(user) {
-        UsersService.deleteUser(user).then(function (response) {
-            console.log("Deleted");
-            // var index = vm.user.indexOf(user);
-            // vm.user.splice(index, 1);
-        });
-    }
 }
 
 module.exports = ShowController;
@@ -334,8 +324,7 @@ function AuthService($http) {
   self.loginUser = loginUser;
 
   function loginUser(email, password) {
-    console.log("user services" + password);
-    return $http.post('api/sessions/', {
+    return $http.post('api/login/', {
       email: email,
       password: password
     });
@@ -356,8 +345,6 @@ function UsersService($http) {
 	self.loadCurrent = loadCurrent;
 	self.addAssignment = addAssignment;
 	self.addNewUser = addNewUser;
-	/*self.updateUser = updateUser;*/
-	/*self.addNewAssignment = addNewAssignment;*/
 	self.deleteUser = deleteUser;
 
 	function loadCurrent(id) {
@@ -38471,13 +38458,13 @@ module.exports = "<script type=\"text/javascript\"></script>\n\n<link href='http
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2>\n  <form ng-submit=\"$ctrl.loginUnauth()\" class=\"form-group\">\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\"\n           required>\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\"\n           required>\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <h6>First time? <a ui-sref=\"signup\">Start here.</a> </h6>\n\n\n</div>\n<!-- ui-sref=\"show({ userId: userId})\" -->\n";
+module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2>\n  <form ng-submit=\"$ctrl.loginUnauth()\" class=\"form-group\">\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\">\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\">\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <h6>First time? <a ui-sref=\"signup\">Start here.</a> </h6>\n\n\n</div>\n<!-- ui-sref=\"show({ userId: userId})\" -->\n";
 
 /***/ }),
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"show-section row\">\n\n\n\t<!-- <div class=\"col col-md-3\">\n\t\t<h4>Students</h4>\n\t\t  <p ng-repeat=\"student in $ctrl.current.students\">\n\t\t  {{student.lastName}}, {{student.firstName}}</p>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>Grades</h4>\n\t\t\t<p ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%\n\t\t\t</p>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</h4>\n\t\t\t<div ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t<input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\">\n\t\t\t</div>\n\t</div>\n\n\t<div class=\"col col-md-3\">\n\t\t<h4>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</h4>\n\t\t\t<div ng-repeat=\"student in $ctrl.current.students\">\n\t\t\t<input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\">\n\t\t\t</div>\n\t</div>\n</div> -->\n<div>\n  <div class=\"col-lg-12\">\n                      <div class=\"panel panel-default\">\n                          <div class=\"panel-heading\">\n                              <h3>{{$ctrl.current.username}}'s Students</h3>\n                          </div>\n                          <!-- /.panel-heading -->\n                          <div class=\"panel-body\">\n                              <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n                                  <thead>\n                                      <tr ng=\"student in $ctrl.current.students\">\n                                          <th>Students</th>\n                                          <th>Grades</th>\n                                          <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n                                          <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                                          <th>Delete</th>\n\n                                      </tr>\n                                  </thead>\n                                  <tbody>\n                                      <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                                          <td>{{student.lastName}}, {{student.firstName}}</td>\n                                          <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                                          <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                                          <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                                          <td class=\"center\">X</td>\n                                      </tr>\n\n                                  </tbody>\n                              </table>\n                              <!-- /.table-responsive -->\n                              <!-- <div class=\"well\">\n                                  <h4>DataTables Usage Information</h4>\n                                  <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target=\"_blank\" href=\"https://datatables.net/\">https://datatables.net/</a>.</p>\n                                  <a class=\"btn btn-default btn-lg btn-block\" target=\"_blank\" href=\"https://datatables.net/\">View DataTables Documentation</a>\n                              </div> -->\n                          </div>\n\n<br>\n<div class=\"new-assignment\">\n  <input ui-sref=\"createAssignment({ userId:'58eb9129be29bd3c1a4c731e'})\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n</div>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-default\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
+module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n      <h3>{{$ctrl.current.username}}'s Students</h3>\n  </div>\n  <!-- /.panel-heading -->\n  <div class=\"panel-body\">\n      <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n          <thead>\n              <tr ng=\"student in $ctrl.current.students\">\n                  <th>Students</th>\n                  <th>Grades</th>\n                  <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n                  <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                  <th>Delete</th>\n\n              </tr>\n          </thead>\n          <tbody>\n              <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                  <td>{{student.lastName}}, {{student.firstName}}</td>\n                  <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                  <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                  <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                  <td class=\"center\">X</td>\n              </tr>\n\n          </tbody>\n      </table>\n\n  </div>\n\n<br>\n<div class=\"new-assignment\">\n  <input ui-sref=\"createAssignment({ userId:'58eb9129be29bd3c1a4c731e'})\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n</div>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-default\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
 
 /***/ }),
 /* 20 */

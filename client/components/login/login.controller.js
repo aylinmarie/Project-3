@@ -1,6 +1,6 @@
-LoginController.$inject = ['AuthService'];
+LoginController.$inject = ['$state', 'AuthService'];
 
-function LoginController(AuthService) {
+function LoginController($state, AuthService) {
   const vm = this;
 
   vm.loginUnauth = loginUnauth;
@@ -14,8 +14,7 @@ function LoginController(AuthService) {
       vm.login.password
     ).then(function resolve(response) {
       console.log("function working");
-      vm.current = response.data.user;
-      console.log("the user id is" + current.userId);
+      $state.go("show", {userId: response.data})
     })
   }
 }

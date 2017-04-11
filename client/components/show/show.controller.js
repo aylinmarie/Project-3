@@ -5,7 +5,6 @@ function ShowController($stateParams, $scope, UsersService) {
   vm.current = {};
   vm.user = [];
   vm.studentsGrades = [];
-  vm.deleteUser = deleteUser;
 
 
   activate();
@@ -42,15 +41,6 @@ function ShowController($stateParams, $scope, UsersService) {
       return total;
   }
 
-  function deleteUser(user){
-  UsersService
-    .deleteUser(user)
-    .then(function(response){
-      console.log("Deleted");
-      // var index = vm.user.indexOf(user);
-      // vm.user.splice(index, 1);
-   });
-}
 
 }
 

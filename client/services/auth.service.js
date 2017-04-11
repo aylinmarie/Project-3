@@ -9,8 +9,7 @@ function AuthService($http) {
     self.loginUser = loginUser;
 
     function loginUser(email, password) {
-  		console.log("user services" + password);
-  		return $http.post('api/sessions/', {
+  		return $http.post('api/login/', {
   			email: email,
   			password: password
   		});
