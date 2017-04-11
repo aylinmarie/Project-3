@@ -23,17 +23,15 @@ router.put('/:id', function addStudentToUser(request, response) {
     assignments : {}
   })
 
-  console.log('old length: " + user.students.length);
-
   User.findById((id), function(error, user) {
     console.log("assignment name for (0,0): " + user.students[0].assignments[0].name);
     }).exec(function(error, user) {
-      user.students[0].assignments.forEach(function (assignment, index) {
-        newStudent.asssignments[index] = assignment;
+      user.students[0].assignments.forEach(function (assignment) {
+        newStudent.asssignments.push(assignment);
       })
       user.students.push(newStudent);
     })
-      console.log('new length: " + user.students.length);
+      console.log('new length: ' + user.students.length);
   
 
 
