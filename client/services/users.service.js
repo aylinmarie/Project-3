@@ -10,8 +10,8 @@ function UsersService($http) {
 		self.loadCurrent = loadCurrent;
 		self.addAssignment = addAssignment;
 		self.addNewUser = addNewUser;
-/*		self.deleteUser = deleteUser;
-*/		self.deleteAssignment = deleteAssignment;
+		self.deleteAssignment = deleteAssignment;
+		self.saveNewGrade = saveNewGrade;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -37,10 +37,12 @@ function UsersService($http) {
 				assignmentName: assignmentName});
 	}
 
-
-	/*function deleteUser(user) {
-		console.log("My user id is not working");
-		return $http.delete('/api/users/' + user._id);
-
-	}*/
+	function saveNewGrade(id, user) {
+		console.log("Hey there " + user._id);
+		console.log(id);
+		return $http
+			.put('/api/grades/' + id, {
+				user: user
+			});
+	}
 }
