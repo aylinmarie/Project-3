@@ -6,7 +6,6 @@ var User = require('../models/user');
 var Student = require('../models/student');
 var Assignment = require('../models/assignment');
 var logger = require('morgan');
-var User = require('../models/User');
 
 
 
