@@ -9,7 +9,6 @@ body, .container-fluid {
 }
 
 .container {
-    width: 1170px;
     background-color: #fff;
     padding-right: 15px;
     padding-left: 15px;
@@ -138,16 +137,19 @@ th .btn {
     color: #2e527c;
 }
 
+.tab-content>.active {
+    display: inline;
+}
+
 /*SIGN UP and LOGIN PAGE*/
 .signup-section, .login-section {
   min-width: 300px;
   max-width: 300px;
   text-align: center;
+  height: 530px;
 }
 
-
 /*DASHBOARD*/
-
 
 .new-assignment {
   text-align: center;
@@ -172,4 +174,5 @@ th .btn {
 .foot, .foot small {
   text-align: center;
   font-size: 11px;
+  padding: 40px;
 }
