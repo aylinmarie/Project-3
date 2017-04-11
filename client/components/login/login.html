@@ -1,11 +1,11 @@
 <div class="login-section container-fluid">
   <h2>Login</h2>
-  <form class="form-group" ui-sref="show({ userId:'58eb9129be29bd3c1a4c731e'})">
+  <form ng-submit="$ctrl.loginUnauth()" class="form-group">
     <label>Email:</label>
     <input class="form-control"
            type="text"
            name="email"
-           required>
+           ng-model="$ctrl.login.email">
            <small><div style="color: grey" ng-message="required">Email is required</div></small>
            <br>
 
@@ -13,17 +13,16 @@
     <input class="form-control"
            type="text"
            name="password"
-           required>
+           ng-model="$ctrl.login.password">
     <small><div style="color: grey" ng-message="required">Password is required</div></small>
     <br>
 
-    <input class="btn btn-primary" type="submit" ui-sref="show({ userId:'58eb9129be29bd3c1a4c731e'})" value="submit">
+    <input class="btn btn-primary" type="submit"  value="submit">
   </form><br>
 
 
   <h6>First time? <a ui-sref="signup">Start here.</a> </h6>
 
-    <!-- <input type="submit" ui-sref="show({ userId:'58eb9129be29bd3c1a4c731e'})" value="submit">
-  </form> -->
 
 </div>
+<!-- ui-sref="show({ userId: userId})" -->

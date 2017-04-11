@@ -119,6 +119,12 @@ small {
   text-align: center;
 }
 
+.create {
+  min-width: 350px;
+  max-width: 350px;
+  text-align: center;
+}
+
 /*DASHBOARD FOOTER*/
 .show-footer {
   text-align: center;

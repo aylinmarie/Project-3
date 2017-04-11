@@ -10,19 +10,17 @@ function UsersService($http) {
 		self.loadCurrent = loadCurrent;
 		self.addAssignment = addAssignment;
 		self.addNewUser = addNewUser;
-		/*self.updateUser = updateUser;*/
-		/*self.addNewAssignment = addNewAssignment;*/
 		self.deleteUser = deleteUser;
+
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
 	}
 
 	function addAssignment(id, name, assignmentType, pointsMax) {
-
 		return $http
 			.put('/api/users/' + id, {
-				name: name, 
+				name: name,
 				assignmentType: assignmentType,
 				pointsMax: pointsMax});
 	}
@@ -31,12 +29,6 @@ function UsersService($http) {
 		return $http.post('/api/users/', newUser);
 	}
 
-	/*function updateUser(id) {
-
-		return $http
-		.put('/api/users/' + id);
-		return $http.patch('/api/users/' + id );
-	}*/
 
 	function deleteUser(user) {
 		console.log("My user id is not working");

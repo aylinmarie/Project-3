@@ -1,8 +1,22 @@
-LoginController.$inject = [];
+LoginController.$inject = ['$state', 'AuthService'];
 
-function LoginController() {
+function LoginController($state, AuthService) {
   const vm = this;
-  let temp = '58e8f03b22c5dc033454ed1b';
+
+  vm.loginUnauth = loginUnauth;
+  vm.login = {};
+
+  function loginUnauth() {
+    console.log("Hit login button");
+    AuthService
+    .loginUser(
+      vm.login.email,
+      vm.login.password
+    ).then(function resolve(response) {
+      console.log("function working");
+      $state.go("show", {userId: response.data})
+    })
+  }
 }
 
 
