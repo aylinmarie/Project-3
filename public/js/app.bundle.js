@@ -440,7 +440,7 @@ function UsersService($http) {
 	function saveNewGrade(id, user) {
 		console.log("Hey there " + user._id);
 		console.log(id);
-		return $http.put('/api/grades/' + id, {
+		return $http.patch('/api/grades/' + id, {
 			user: user
 		});
 	}

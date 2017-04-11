@@ -41,7 +41,7 @@ function UsersService($http) {
 		console.log("Hey there " + user._id);
 		console.log(id);
 		return $http
-			.put('/api/grades/' + id, {
+			.patch('/api/grades/' + id, {
 				user: user
 			});
 	}

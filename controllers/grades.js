@@ -14,7 +14,7 @@ var User = require('../models/User');
 // SAVE ASSIGNMENT
 //======================
 
-router.put('/:id', function saveAction(request, response) {
+router.patch('/:id', function saveAction(request, response) {
   var id = request.params.id;
   var clientUser = request.body.user;
 
@@ -30,12 +30,12 @@ router.put('/:id', function saveAction(request, response) {
         console.log("assignment name" + assignIndex);
         assignment.pointsEarned = clientUser.students[studentIndex].assignments[assignIndex].pointsEarned;
         console.log(assignment.pointsEarned);
-
-        user.save();
-        response.json({user: user});
       })
     });
+    user.save();
   });
+
+  response.json({user: user});
 });
 
 
