@@ -5,6 +5,7 @@ body, .container-fluid {
   margin: 0 auto;
   width: 100%;
   background-color: #eee;
+  font-family: sans-serif;
 }
 
 .container {
@@ -25,28 +26,10 @@ body, .container-fluid {
   padding-right: 60px;
 }
 
-.heading{
-  text-align: center;
-}
-
 small {
   text-transform: uppercase;
   font-size: 8px;
   letter-spacing: .1em;
-}
-.row {
-    margin-right: -15px;
-    margin-left: -15px;
-    padding-left: 10px;
-}
-.fa-6 {
-    font-size: 20em !important;
-    color: #ff715b;
-}
-
-.fa-4 {
-    font-size: 10em !important;
-    color: #2e527c;
 }
 
 .btn-primary {
@@ -64,13 +47,6 @@ small {
 .brand {
   text-align: left;
    padding-left: 60px;
-}
-
-.signup-section h2, .login-section h2{
-    min-width: 300px;
-    max-width: 100px;
-    text-align: center;
-    color: white;
 }
 
 
@@ -110,6 +86,26 @@ small {
 }
 
 /*DASHBOARD*/
+
+.heading{
+  text-align: center;
+}
+
+.row {
+    margin-right: -15px;
+    margin-left: -15px;
+    padding-left: 10px;
+}
+.fa-6 {
+    font-size: 20em !important;
+    color: #ff715b;
+}
+
+.fa-4 {
+    font-size: 10em !important;
+    color: #2e527c;
+}
+
 .new-assignment {
   text-align: center;
   padding-bottom: 30px;
