@@ -14,7 +14,7 @@ function CreateStudentController($stateParams, UsersService) {
   }
 
   function addNewStudent() {
-  	console.log('this is from addNewAssignment' + vm.newStudent.name);
+  	console.log('this is from addNewAssignment' + vm.newStudent.firstname);
 
     //how the form data make it to the controller server-side???
     console.log("userID" + $stateParams.userId);
