@@ -65,6 +65,14 @@ small {
   border-color: #ff715b;
 }
 
+th {
+  text-align: center;
+}
+
+th .btn {
+  margin: 10px;
+}
+
 /*HEADER*/
 .brand {
   text-align: left;
