@@ -12,6 +12,7 @@ function UsersService($http) {
 		self.signupUser = signupUser;
 		self.deleteAssignment = deleteAssignment;
 		self.saveNewGrade = saveNewGrade;
+		self.addStudent = addStudent;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -20,18 +21,28 @@ function UsersService($http) {
 	function addAssignment(id, name, assignmentType, pointsMax) {
 		return $http
 			.put('/api/users/' + id, {
-				name: name,
-				assignmentType: assignmentType,
-				pointsMax: pointsMax});
+				name           : name,
+				assignmentType : assignmentType,
+				pointsMax      : pointsMax
+			});
+	}
+
+	function addStudent(id, firstName, lastName) {
+		console.log(lastName);
+		return $http
+			.put('/api/students/' + id, {
+				firstName : firstName,
+				lastName  : lastName
+			});
 	}
 
 	function signupUser(email, username, password) {
 		console.log('password' + password)
 		return $http	
 			.post('/api/users/', {
-				email: email,
-				username: username,
-				password: password
+				email   : email,
+				username : username,
+				password : password
 			});
 	}
 

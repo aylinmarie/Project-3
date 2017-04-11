@@ -31,11 +31,11 @@ router.get('/:id', function showAction(request, response) {
 router.put('/:id', function updateAction(request, response) {
 
   var newAssignment = new Assignment({
-    name: request.body.name,
-    assignmentType: request.body.assignmentType,
-		dateCreated: {},
-    pointsEarned: 0,
-    pointsMax: request.body.pointsMax,
+    name              : request.body.name,
+    assignmentType    : request.body.assignmentType,
+		dateCreated       : {},
+    pointsEarned      : 0,
+    pointsMax         : request.body.pointsMax,
   });
 
   var id = request.params.id;
