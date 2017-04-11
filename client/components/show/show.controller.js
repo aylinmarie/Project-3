@@ -34,7 +34,7 @@ function ShowController($stateParams, $scope, UsersService) {
 
   $scope.getSumPointsMax = function(student){
       var total = Number(0);
-      for(var i = 0; i < 2; i++){
+      for(var i = 0; i < student.assignments.length; i++){
           var points = Number(student.assignments[i].pointsMax);
           total += points;
       }
