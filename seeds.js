@@ -4,9 +4,12 @@ var Student = require('./models/student.js');
 
 mongoose.Promise = global.Promise;
 
-var db = mongoose.connect('mongodb://localhost/project-three');
-//var db = mongoose.connect('mongodb://localhost:27017/criminals-app');
+mongoose.connect(process.env.MONGODB_URI);
 
+mongoose.connection.on('error', function (err) {
+  console.log(err);
+  process.exit(-1);
+});
 
 var seededAssignments = [ {
 	name: 'Test on Plants',
