@@ -34,7 +34,6 @@ router.patch('/:id', function saveAction(request, response) {
     });
     user.save();
   });
-
   response.json({user: user});
 });
 
