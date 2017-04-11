@@ -12,6 +12,7 @@ var User = require('../models/User');
 
 router.post('/', function(req, res){
 	console.log(req);
+	console.log("At the router login.");
 	User.findOne({'email': req.body.email, 'password': req.body.password}, '_id', function(err, user) {
 		if (err) return (err);
 		console.log("This is the user id:" + user._id);
