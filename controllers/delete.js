@@ -25,12 +25,15 @@ router.put('/:id', function deleteAction(request, response) {
     console.log("findbyiduser user:" + user);
   }).exec(function(error, user) {
     
+    
+
     user.students.forEach(function (student) {
-      console.log("from delete.js indexOf Decid Proj:" + student.assignments.indexOf( {name: assignmentName} ));
-      var index = student.assignments.indexOf(assignmentName);
+      console.log("from delete.js indexOf project name:" + 
+        student.assignments.map(x => x.name).indexOf(assignmentName)); 
+      var index = student.assignments.map(x => x.name).indexOf(assignmentName);
       student.assignments.splice(index, 1); //might be able to just stick in assignmentName. Also might use assignmentName and then index
       
-      
+   
     });
   user.save();
   });
