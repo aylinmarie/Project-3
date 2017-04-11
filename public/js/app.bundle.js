@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -125,6 +125,41 @@ module.exports = CreateAssignmentController;
 /***/ (function(module, exports) {
 
 <<<<<<< HEAD
+DeleteAssignmentController.$inject = ['$stateParams', 'UsersService'];
+
+function DeleteAssignmentController($stateParams, UsersService) {
+  const vm = this;
+
+  vm.deleteAssign = deleteAssign; //attaching the function to vm
+  //initializing newAssignment
+  console.log("Made to deleteAssignment 1:" + $stateParams.assignmentNumber);
+
+  activate();
+
+  function activate() {
+    deleteAssign();
+  }
+
+  function deleteAssign() {
+    console.log("an 1:" + $stateParams.assignmentName);
+    console.log("delete " + $stateParams.userId);
+    UsersService.deleteAssignment($stateParams.userId, $stateParams.assignmentName).then(function resolve(response) {
+      console.log("back from the server!");
+      vm.current = response.data.user; //not sure this is necessary
+      console.log("new user: " + vm.current);
+    });
+  }
+}
+
+module.exports = DeleteAssignmentController;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports) {
+
+=======
+<<<<<<< HEAD
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 HomeController.$inject = [];
 =======
 throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/davidhernquist/project-3/client/components/home/home.controller.js'");
@@ -166,7 +201,7 @@ function LoginController($state, AuthService) {
 module.exports = LoginController;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
@@ -174,8 +209,6 @@ ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
 function ShowController($stateParams, $scope, UsersService) {
     const vm = this;
     vm.current = {};
-    vm.user = [];
-    vm.studentsGrades = [];
 
     activate();
 
@@ -184,7 +217,6 @@ function ShowController($stateParams, $scope, UsersService) {
     }
 
     function loadCurrent(userId) {
-        console.log($stateParams);
 
         UsersService.loadCurrent($stateParams.userId).then(function resolve(response) {
             vm.current = response.data.user;
@@ -202,7 +234,7 @@ function ShowController($stateParams, $scope, UsersService) {
 
     $scope.getSumPointsMax = function (student) {
         var total = Number(0);
-        for (var i = 0; i < 2; i++) {
+        for (var i = 0; i < student.assignments.length; i++) {
             var points = Number(student.assignments[i].pointsMax);
             total += points;
         }
@@ -213,7 +245,7 @@ function ShowController($stateParams, $scope, UsersService) {
 module.exports = ShowController;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 SignupController.$inject = [];
@@ -239,11 +271,11 @@ function SignupController() {
 module.exports = SignupController;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(15);
-__webpack_require__(13);
+const angular = __webpack_require__(17);
+__webpack_require__(15);
 
 angular.module('gradeBook', ['ui.router']).config(uiRouterSetup);
 
@@ -266,18 +298,21 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
   }).state('createAssignment', {
     url: '/create/:userId',
     template: '<create-assignment></create-assignment>'
+  }).state('deleteAssignment', {
+    url: '/delete/:userId/:assignmentName',
+    template: '<delete-assignment></delete-assignment>'
   });
 
   $urlRouterProvider.otherwise('/');
 }
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 <<<<<<< HEAD
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(16);
+const template = __webpack_require__(18);
 
 const component = {
   controller: controller,
@@ -287,10 +322,13 @@ const component = {
 angular.module('gradeBook').component('createAssignment', component);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
+<<<<<<< HEAD
+const template = __webpack_require__(19);
+=======
 const template = __webpack_require__(17);
 =======
 
@@ -317,15 +355,23 @@ throw new Error("Module build failed: Error: ENOENT: no such file or directory, 
 const controller = __webpack_require__(2);
 const template = __webpack_require__(18);
 >>>>>>> david
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 
 const component = {
   controller: controller,
   template: template
 };
 
-angular.module('gradeBook').component('home', component);
+angular.module('gradeBook').component('deleteAssignment', component);
 
 /***/ }),
+<<<<<<< HEAD
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(2);
+const template = __webpack_require__(20);
+=======
 <<<<<<< HEAD
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -339,6 +385,26 @@ const template = __webpack_require__(18);
 const controller = __webpack_require__(3);
 const template = __webpack_require__(19);
 >>>>>>> david
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('gradeBook').component('home', component);
+
+/***/ }),
+<<<<<<< HEAD
+/* 10 */
+=======
+<<<<<<< HEAD
+/* 9 */
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(3);
+const template = __webpack_require__(21);
 
 const component = {
   controller: controller,
@@ -348,12 +414,16 @@ const component = {
 angular.module('gradeBook').component('login', component);
 
 /***/ }),
-<<<<<<< HEAD
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(3);
-const template = __webpack_require__(19);
+=======
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+>>>>>>> david
+const controller = __webpack_require__(4);
+const template = __webpack_require__(22);
 
 const component = {
   controller: controller,
@@ -363,16 +433,11 @@ const component = {
 angular.module('gradeBook').component('show', component);
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-=======
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
->>>>>>> david
-const controller = __webpack_require__(4);
-const template = __webpack_require__(20);
+const controller = __webpack_require__(5);
+const template = __webpack_require__(23);
 
 const component = {
   controller: controller,
@@ -382,7 +447,7 @@ const component = {
 angular.module('gradeBook').component('signup', component);
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 <<<<<<< HEAD
@@ -406,7 +471,7 @@ throw new Error("Module build failed: Error: ENOENT: no such file or directory, 
 >>>>>>> david
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 angular.module('gradeBook').service('UsersService', UsersService);
@@ -419,7 +484,8 @@ function UsersService($http) {
 	self.loadCurrent = loadCurrent;
 	self.addAssignment = addAssignment;
 	self.addNewUser = addNewUser;
-	self.deleteUser = deleteUser;
+	/*		self.deleteUser = deleteUser;
+ */self.deleteAssignment = deleteAssignment;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -436,14 +502,20 @@ function UsersService($http) {
 		return $http.post('/api/users/', newUser);
 	}
 
-	function deleteUser(user) {
-		console.log("My user id is not working");
-		return $http.delete('/api/users/' + user._id);
+	function deleteAssignment(id, assignmentName) {
+		console.log("Services 1:" + assignmentName);
+		return $http.put('/api/delete/' + id, {
+			assignmentName: assignmentName });
 	}
+
+	/*function deleteUser(user) {
+ 	console.log("My user id is not working");
+ 	return $http.delete('/api/users/' + user._id);
+ 	}*/
 }
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 /**
@@ -5132,7 +5204,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 /**
@@ -38509,14 +38581,17 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(14);
+__webpack_require__(16);
 module.exports = angular;
 
 
 /***/ }),
+<<<<<<< HEAD
+/* 18 */
+=======
 /* 16 */
 <<<<<<< HEAD
 =======
@@ -38528,62 +38603,87 @@ module.exports = "<h1>test create assignment</h1>\n\n<div class=\"create\">\n\t<
 /* 17 */,
 /* 18 */
 >>>>>>> david
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 /***/ (function(module, exports) {
 
-module.exports = "\n <div class=\"create container-fluid\">\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div><br>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div><br>\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div> \n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div><br>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
+<<<<<<< HEAD
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = "<!-- maybe put a modal or an alert asking are you sure? -->\n\n";
+
+/***/ }),
+/* 20 */
+=======
 <<<<<<< HEAD
 /* 17 */
 =======
 /* 19 */
 >>>>>>> david
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 /***/ (function(module, exports) {
 
 module.exports = "<script type=\"text/javascript\"></script>\n\n<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800' rel='stylesheet' type='text/css'>\n\n<div class=\"container\">\n\n    <div id=\"tabs-home\" class=\"row slider\" style=\"/* background:url(http://legalprom.cl/wp-content/uploads/2014/05/main-bg.jpg) no-repeat center fixed; */background-color: rgba(245, 245, 245, 0.25);\">\n\n        <!-- tab content -->\n        <div id=\"wea\" class=\"col-sm-12 tab-content\">\n\n            <div class=\"tab-pane active text-style fade in active\" id=\"tab1\">\n                <h2>GRADEBOOK SOFTWARE FOR THE MODERN TEACHER</h2>\n                <p></p>\n                <p><strong>Desde $74.990 y 24 hrs.</strong></p>\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">Seleccione Sociedad para comenzar:</h3>\n                    </div>\n                    <div class=\"panel-body\">\n\n<div class=\"row features-home-right\">\n        <div class=\"col-md-5\">\n            <img alt=\"rapidez de legalprom\" src=\"http://legalprom.cl/wp-content/uploads/2014/05/rapidez.jpg\">\n        </div>\n        <div class=\"col-md-7\">\n            <div class=\"color\"><h3>Seguro</h3>\n            <h4>Productos legales seguros a su alcance</h4>\n            <p>LegalProm registra una tasa de satisfacción de prácticamente un 100%. Nuestras sociedades han superado todos los controles bancarios y de otras entidades tales como ministerios, ChileCompra, municipalidades, etc.</p></div>\n <div><a href=\"http://legalprom.com/por-que-legalprom/\" class=\"btn btn-primary btn-lg\" style=\"float:right;margin-top:50px;margin-right: 100px;padding:20px;\">Sign Up Today!</a></div>\n\n        </div>\n\n    </div>\n</div>\n                </div>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab2\">\n                <h2>Proteja su Marca Online</h2>\n                <p>Evite que otros aprovechen su esfuerzo y buen nombre registrando su marca con LegalProm</p>\n                <p><strong>Desde $129.990</strong></p>\n                <div class=\"panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">Seleccione Sociedad para comenzar:</h3>\n                    </div>\n                    <div class=\"panel-body\">\n                        <form action=\"/forms/login\" accept-charset=\"UTF-8\" method=\"post\" class=\"ng-pristine ng-valid\"><input name=\"utf8\" type=\"hidden\" value=\"✓\" autocomplete=\"off\"><input type=\"hidden\" name=\"authenticity_token\" value=\"ve6XAejZc30dRt9YPpgeHfj7z95M0d8dI9dVZtndr9IhXOt4/mF1WjyPwlScpgyCh4bkLKNzfyt5naNaG837Rw==\" autocomplete=\"off\">\n                            <div class=\"row form-group\">\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/establecimiento-comercial.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Establecimiento Comercial\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mec\">\n                                    </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/servicio.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Servicio\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_ms\">\n                                </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/producto.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Producto\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mp\">\n                                </div>\n                                <div class=\"col-md-2\">\n                                    <img src=\"http://legalprom.cl/wp-content/uploads/2014/02/establecimiento-industrial.jpg\" class=\"img-responsive img-radio\" width=\"50\" data-toggle=\"tooltip\" title=\"\" data-original-title=\"Marca Establecimiento Industrial\">\n                                    <input type=\"checkbox\" name=\"doc_type[cod][]\" class=\"hidden\" value=\"brand_mei\">\n                                </div>\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"first_name\" id=\"first_name\" class=\"form-control input-sm\" placeholder=\"Nombre\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"last_name\" id=\"last_name\" class=\"form-control input-sm\" placeholder=\"Apellido\">\n                            </div>\n                            <div class=\"form-group\">\n                                <input type=\"text\" name=\"email\" id=\"email\" class=\"form-control input-sm\" placeholder=\"Email\">\n                            </div>\n                            <input type=\"submit\" name=\"commit\" value=\"Crear mi empresa\" class=\"btn btn-info btn-block\">\n\n                        </form>\n                    </div>\n                </div>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab3\">\n                <h2>Modificación y Disolución Sociedades</h2>\n                <p>Concrete oportunidades adaptando sus negocios con velocidad y seguridad LegalProm</p>\n                <p><strong>Desde $44.990 y 24 hrs.</strong></p>\n                <a href=\"#\">Detalle Precio y Plazos</a>\n            </div>\n\n            <div class=\"tab-pane text-style fade\" id=\"tab4\">\n                <h2>¿Busca un Abogado en Quien Confiar?</h2>\n                <p>Miles de clientes han confiado en LegalProm. Muchos huyendo de malos servicios, perdidas de tiempo y dinero.</p>\n            </div>\n        </div>\n\n    </div>\n\n\n\n    <div class=\"row press-quotes\">\n\n\n\n    </div>\n\n    <div class=\"line\">\n        <hr>\n    </div>\n\n    <div class=\"row steps\">\n        <h3>3 Sencillos Pasos</h3>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 1 - formulario online\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso1-formulario.jpg\"></center>\n            <h4>Responda un sencillo cuestionario en línea. No mas de 10 min.</h4>\n        </div>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 2 - generación y revisión de documentos\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso2-documentos.jpg\"></center>\n            <h4>Abogados revisarán sus respuestas y crearán sus documentos</h4>\n        </div>\n        <div class=\"col-md-4\">\n            <center><img alt=\"Paso 3 - Firma en notaria\" src=\"http://legalprom.cl/wp-content/uploads/2013/12/paso3-firma.jpg\"></center>\n            <h4>Se firman y LegalProm se encarga del resto. Ud. ahorrará tiempo</h4>\n        </div>\n    </div>\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n    <div class=\"line\">\n        <hr>\n    </div>\n\n\n\n\n\n\n\n    <div class=\"row\">\n        <div class=\"col-md-12 one-column-text\">\n            <h2 style=\"font-size:36px;\">Olvídese de Trámites y Complicaciones</h2>\n            <h3 style=\"font-size:24px;\">Déje sus asuntos en manos de nuestro equipo y ocupe su tiempo su negocio</h3>\n        </div>\n    </div>\n\n    <div class=\"row buttons-who-we-are\">\n        <div clas=\"col-md-6\">\n            <a class=\"btn btn-primary btn-lg\" style=\"float:left; width:30%;margin:10%; padding:30px;\">Registrar su marca</a>\n        </div>\n        <div clas=\"col-md-6\">\n            <a class=\"btn btn-info btn-lg\" style=\"float:right;width:30%; margin:10%; padding:30px;\">Crear su empresa</a>\n        </div>\n\n    </div>\n\n    <center><p>Miles de clientes felices y satisfechos desde 2012.</p></center>\n\n    <div class=\"row\" id=\"opinion-right\" style=\"background:url(http://legalprom.cl/wp-content/uploads/2014/05/ingeagro.jpg) no-repeat center;\">\n        <div class=\"col-md-6\"></div>\n        <div class=\"col-md-6\">\n            <h3>Sobresaliente servicio !</h3>\n            <p>Rosario Sepúlveda</p>\n            <p>Co-Fundadora de IngeAgro</p>\n            <p>Empresa creada con LegalProm</p>\n        </div>\n    </div>\n\n</div>\n";
 
 /***/ }),
 <<<<<<< HEAD
+/* 21 */
+=======
+<<<<<<< HEAD
 /* 18 */
 =======
 /* 20 */
 >>>>>>> david
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2>\n  <form ng-submit=\"$ctrl.loginUnauth()\" class=\"form-group\">\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\">\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\">\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <h6>First time? <a ui-sref=\"signup\">Start here.</a> </h6>\n\n\n</div>\n<!-- ui-sref=\"show({ userId: userId})\" -->\n";
 
 /***/ }),
 <<<<<<< HEAD
+/* 22 */
+=======
+<<<<<<< HEAD
 /* 19 */
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n<div class=\"panel panel-default\">\n  <div class=\"panel-heading\">\n      <h3>{{$ctrl.current.username}}'s Students</h3>\n  </div>\n  <!-- /.panel-heading -->\n  <div class=\"panel-body\">\n      <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n          <thead>\n              <tr ng=\"student in $ctrl.current.students\">\n                  <th>Students</th>\n                  <th>Grades</th>\n                  <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n                  <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                  <th>Delete</th>\n\n              </tr>\n          </thead>\n          <tbody>\n              <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                  <td>{{student.lastName}}, {{student.firstName}}</td>\n                  <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                  <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                  <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                  <td class=\"center\">X</td>\n              </tr>\n\n          </tbody>\n      </table>\n\n  </div>\n\n<br>\n<div class=\"new-assignment\">\n  <input ui-sref=\"createAssignment({ userId:'58eb9129be29bd3c1a4c731e'})\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n</div>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-default\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
+module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <h3>{{$ctrl.current.username}}'s Students</h3>\n    </div>\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n        <table width=\"100%\" id=\"example\" class=\" table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n            <thead>\n                <tr ng=\"student in $ctrl.current.students\">\n                    <th>Students</th>\n                    <th>Grades</th>\n                    <th>{{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>\n                    \n                    <th>{{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}} <input ng-submit=\"$ctrl.deleteAssign()\" ui-sref=\"deleteAssignment({ userId: $ctrl.current._id, assignmentName: $ctrl.current.students[0].assignments[1].name })\" class=\"btn btn-default\" type=\"submit\" value=\"X\"></th>\n\n                    <th>{{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                    <td>{{student.lastName}}, {{student.firstName}}</td>\n                    <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\"\n                     ng-model=\"student.assignments[2].pointsEarned\"></td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                    <td><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                    \n                </tr>\n            </tbody>\n        </table>\n\n    </div>\n\n  <br>\n  <div class=\"new-assignment\">\n    <input ui-sref=\"createAssignment({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n  </div>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-default\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
 
 /***/ }),
-/* 20 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = "<div class=\"signup-section container-fluid\">\n  <h2>Signup</h2>\n\n  <form ng-submit=\"$ctrl.addNewUser()\" class=\"form-group\" method=\"post\">\n    <label>Email:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.email\" name=\"email\"><br>\n\n    <label>Password</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.password\" name=\"password\"><br>\n\n    <input class=\"btn btn-primary\" type=\"submit\" ui-sref=\"login\" value=\"Submit\">\n  </form>\n  <br>\n\n  <h6>Already have an account? <a ui-sref=\"login\">Log in here.</a> </h6>\n\n</div>\n\n<div>\n  <li ng-repeat=\"user in $ctrl.current\">\n    <p>{{$ctrl.username}}</p>\n  <button ng-click=\"$ctrl.deleteUser(user)\" class=\"btn btn-warning\">Delete Assignment</button>\n  </li>\n</div>\n";
 
 /***/ }),
+<<<<<<< HEAD
+/* 24 */
+=======
 =======
 >>>>>>> david
 /* 21 */
+>>>>>>> a614f0d5ccc341e1970dcbc8a40ddba7e9dcb573
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(5);
 __webpack_require__(6);
-__webpack_require__(0);
 __webpack_require__(7);
-__webpack_require__(1);
+__webpack_require__(0);
 __webpack_require__(8);
-__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(9);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(10);
-__webpack_require__(4);
+__webpack_require__(3);
 __webpack_require__(11);
-module.exports = __webpack_require__(12);
+__webpack_require__(4);
+__webpack_require__(12);
+__webpack_require__(5);
+__webpack_require__(13);
+module.exports = __webpack_require__(14);
 
 
 /***/ })
