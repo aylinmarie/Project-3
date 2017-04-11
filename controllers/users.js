@@ -23,6 +23,7 @@ router.get('/:id', function showAction(request, response) {
 	});
 });
 
+<<<<<<< HEAD
 
 //======================
 // USER REGISTRATION
@@ -85,3 +86,31 @@ router.delete('/:id', function destroyAction(request, response) {
 });
 
 module.exports = router;
+=======
+router.put('/:id', function (req, res){
+
+	var updatedStudents = req.body.students //must be an arrays of students with
+													//the new assignemnts
+
+	User.findByIdAndUpdate(req.params.id, {
+		students: updatedStudents //or just req.body.students
+	})
+  /*var writers = [req.body.favorite1, req.body.favorite2, req.body.favorite3];
+  var books = [req.body.book1, req.body.book2, req.body.book3];
+
+  User.findByIdAndUpdate(req.params.id, {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    favoriteWriters: writers,
+    favoriteBooks: books
+  }, {new: true})
+  .exec(function(err, user) {
+    if (err) { console.log(err); }
+
+    console.log(user);
+    res.redirect('/users');
+  });*/
+});
+
+module.exports = router;
+>>>>>>> david
