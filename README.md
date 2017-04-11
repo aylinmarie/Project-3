@@ -30,13 +30,15 @@ Gradebook software for the modern teacher! Reduce grade entry and calculation ti
 
 ## Wireframes
 
-![Landing Page]()
+![Landing Page](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.37.45.png?raw=true)
 
-![Page 2]()
+![Page 2](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.01.png?raw=true)
 
-![Page 3]()
+![Page 3](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.08.png?raw=true)
+
+![Page 4](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.15.png?raw=true)
 
 ## ERD 
-![ERD]()
+![ERD](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.39.42.png?raw=true)
 
 
