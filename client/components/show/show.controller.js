@@ -21,14 +21,15 @@ function ShowController($stateParams, $scope, UsersService) {
   		})
   }
 
-  function deleteAssign() {
+  function deleteAssign(assignmentColumn) {
     console.log("an assignmentName: " + vm.current._id);
-    console.log("delete: " + vm.current.students[0].assignments[1].name);
+    console.log("delete: " + 
+      vm.current.students[0].assignments[assignmentColumn].name);
 
     UsersService
       .deleteAssignment(
         vm.current._id,
-        vm.current.students[0].assignments[1].name
+        vm.current.students[0].assignments[assignmentColumn].name
       ).then(function resolve(response) {
         console.log("back from the server!")
         vm.current = response.data.user

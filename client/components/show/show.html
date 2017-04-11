@@ -14,14 +14,16 @@
                 <tr ng="student in $ctrl.current.students">
                     <th>Students</th>
                     <th>Grades</th>
-                    <th>{{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>
+                    <th>
+                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign(2)" class="btn btn-default" type="submit" value="X - Remove"><br>
+                    {{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>
 
                     <th>
-                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign()" class="btn btn-default" type="submit" value="X - Remove"><br>
+                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign(1)" class="btn btn-default" type="submit" value="X - Remove"><br>
                       {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>
 
                     <th>
-                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign()" class="btn btn-default" type="submit" value="X - Remove"><br>
+                      <input style="font-size: 9px" ng-click="$ctrl.deleteAssign(0)" class="btn btn-default" type="submit" value="X - Remove"><br>
                       {{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>
                 </tr>
             </thead>
