@@ -1,6 +1,6 @@
 # Grade.ly - WDI Project #3
 
-![Landing Screenshot]()
+![Landing Screenshot](https://github.com/aylinmarie/project-3/blob/master/public/images/FireShot%20Capture%2020%20-%20Grade.ly%20-%20https___mysterious-badlands-18420.herokuapp.com_%23!_.png?raw=true)
 
 ## Overview
 Gradebook software for the modern teacher! Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software takes the pain out of manual grade entry, assignment averaging and more!
@@ -30,13 +30,15 @@ Gradebook software for the modern teacher! Reduce grade entry and calculation ti
 
 ## Wireframes
 
-![Landing Page]()
+![Landing Page](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.37.45.png?raw=true)
 
-![Page 2]()
+![Page 2](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.01.png?raw=true)
 
-![Page 3]()
+![Page 3](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.08.png?raw=true)
+
+![Page 4](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.38.15.png?raw=true)
 
 ## ERD 
-![ERD]()
+![ERD](https://github.com/aylinmarie/project-3/blob/master/public/images/Screen%20Shot%202017-04-11%20at%2016.39.42.png?raw=true)
 
 
