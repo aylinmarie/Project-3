@@ -86,8 +86,6 @@ function CreateAssignmentController($stateParams, UsersService) {
 
   function addNewAssignment() {
     console.log('this is from addNewAssignment' + vm.newAssignment.name);
-
-    //how the form data make it to the controller server-side???
     console.log("userID" + $stateParams.userId);
     UsersService.addAssignment($stateParams.userId, vm.newAssignment.name, vm.newAssignment.assignmentType, vm.newAssignment.pointsMax).then(function resolve(response) {
       console.log("function working!");
@@ -38531,7 +38529,7 @@ module.exports = angular;
 /* 18 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"put a name here...\">\n\t</div> \n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"test... quiz... project...\">\n\t</div>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"points...\">\n\t</div><br>\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new assignment. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"Name of assignment...\">\n\t</div><br>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"Test... Quiz... Project...\">\n\t</div><Br>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"Number of points...\">\n\t</div><br>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\" ng-click=\"mySubmit=true\">\n    </div>\n  </form>\n\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\n</div>\n";
 
 /***/ }),
 /* 19 */
