@@ -4,6 +4,7 @@ function ShowController($stateParams, $scope, UsersService) {
   const vm = this;
   vm.current = {};
   vm.deleteAssign = deleteAssign;
+  vm.saveGrades = saveGrades;
 
   activate();
 
@@ -23,17 +24,30 @@ function ShowController($stateParams, $scope, UsersService) {
   function deleteAssign() {
     console.log("an assignmentName: " + vm.current._id);
     console.log("delete: " + vm.current.students[0].assignments[1].name);
-    
-    vm.current.students[0].assignments[1].name
+
     UsersService
       .deleteAssignment(
         vm.current._id,
         vm.current.students[0].assignments[1].name
       ).then(function resolve(response) {
         console.log("back from the server!")
-        vm.current = response.data.user //not sure this is necessary
+        vm.current = response.data.user
         console.log("new user: " + vm.current);
       });
+  }
+
+  function saveGrades() {
+    console.log("Save grade function called" + vm.current._id);
+
+    UsersService
+      .saveNewGrade(
+        vm.current._id,
+        vm.current
+      ).then(function resolve(response) {
+        console.log("back from the server");
+        vm.current = response.data.user;
+      });
+
   }
 
   $scope.getSumPointsEarned = function(student){
@@ -56,4 +70,3 @@ function ShowController($stateParams, $scope, UsersService) {
 }
 
 module.exports = ShowController;
-

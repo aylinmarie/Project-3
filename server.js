@@ -33,6 +33,9 @@ app.use('/api/sessions', sessionsController);
 var loginController = require('./controllers/login.js');
 app.use('/api/login', loginController);
 
+var gradesController = require('./controllers/grades.js');
+app.use('/api/grades', gradesController);
+
 app.listen(process.env.PORT || 3000, function() {
   console.log("We are up and running...");
 });
