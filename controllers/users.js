@@ -59,8 +59,9 @@ router.put('/:id', function updateAction(request, response) {
   var id = request.params.id
 
   User.findById((id), function(error, user) {
-    console.log("findbyid user" + user);
+    console.log("findbyid user " + user);
   }).exec(function(error, user) {
+    console.log("from users.js user:" + user);
     user.students.forEach(function(student) {
       student.assignments.push(newAssignment);
 
