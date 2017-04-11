@@ -23,22 +23,21 @@ router.put('/:id', function addStudentToUser(request, response) {
     assignments : {}
   })
 
-  console.log("I'm in delete router 1:" + request.body.lastName + "id:" + id);
+  console.log('old length: " + user.students.length);
 
   User.findById((id), function(error, user) {
-    console.log(user.students[0].assignments[0].name);
+    console.log("assignment name for (0,0): " + user.students[0].assignments[0].name);
     }).exec(function(error, user) {
-      user.students[0].assignments.forEach(function (assignment) {
-        console.log(assignment.name);
+      user.students[0].assignments.forEach(function (assignment, index) {
+        newStudent.asssignments[index] = assignment;
       })
+      user.students.push(newStudent);
     })
-  /*User.findById((id), function(error, user) {
-    console.log("findbyiduser user:" + user);
-  }).exec(function(error, user) {
-      console.log('%c user ', 'background: #222; color: #bada55', user)
+      console.log('new length: " + user.students.length);
+  
 
 
-
+  /*
     user.students.forEach(function (student) {
       console.log("from delete.js indexOf project name:" +
       student.assignments.map(x => x.name).indexOf(assignmentName));
