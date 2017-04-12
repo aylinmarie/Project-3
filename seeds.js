@@ -15,14 +15,14 @@ var seededAssignments = [ {
 	name: 'Test on Plants',
 	assignmentType: 'Test',
 	dateCreated: '',
-	pointsEarned: 0,
+	pointsEarned: 20,
 	pointsMax: 20},
 
 	{
 	name: 'Deciduous Project',
 	assignmentType: 'Project',
 	dateCreated: '',
-	pointsEarned: 0,
+	pointsEarned: 50,
 	pointsMax: 50}
 ];
 
