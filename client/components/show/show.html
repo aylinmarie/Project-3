@@ -46,7 +46,7 @@
   <div class="button-functions">
     <input ng-click="$ctrl.saveGrades()" class="btn btn-warning" type="submit" value="Save Grades">
     <input ui-sref="createAssignment({ userId:$ctrl.current._id })" class="btn btn-default" type="submit" value="Add Assignment">
-    <input ng-click="$ctrl.addStudent()" class="btn btn-default" type="submit" value="Add Student">
+    <input ui-sref="createStudent({ userId:$ctrl.current._id })" class="btn btn-default" type="submit" value="Add Student">
   </div>
 
 </div>
