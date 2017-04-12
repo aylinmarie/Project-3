@@ -54,12 +54,24 @@ function ShowController($stateParams, $scope, UsersService) {
 
   $scope.passOrFail = function(grade) {
 
-    if (grade < 0.4) 
+    if (grade < 0.4)   //failing badly
       return '#e7908e'
-    else if (grade < 0.7)
+    else if (grade < 0.7)  //failing
       return '#ebcccc'
-    else if (grade < 0.8)
+    else if (grade < 0.8)  //borderline
       return '#faf2cc'
+  }
+
+  $scope.runClassAverage = function() {
+    var pointsEarnedTotal = 0;
+    var pointsMaxTotal = 0;
+    vm.current.students.forEach(function (student) {
+      student.assignments.forEach(function (assignment) {
+        pointsEarnedTotal += assignment.pointsEarned;
+        pointsMaxTotal += assignment.pointsMax;
+      })
+    })
+    return (pointsEarnedTotal/pointsMaxTotal);
   }
   
 

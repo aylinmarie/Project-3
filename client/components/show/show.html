@@ -9,7 +9,7 @@
     </div>
     <!-- /.panel-heading -->
     <div class="panel-body">
-        <table width="100%" id="example" class=" table table-striped table-bordered table-hover" id="dataTables-example">
+        <table width="100%" id="example" class="table table-striped table-bordered table-hover" id="dataTables-example">
             <thead>
                 <tr ng="student in $ctrl.current.students">
                     <th>Students</th>
@@ -37,6 +37,15 @@
                     <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}"><input type="number" name="points-earned" min="0" ng-model="student.assignments[0].pointsEarned"></td>
                 </tr>
             </tbody>
+            <thead>
+              <tr>
+                <th>Class Averages</th>
+                <th ng-style= "{ 'background-color' : passOrFail(runClassAverage())}">{{ runClassAverage()*100 | number: 1}}%</th>
+                <th></th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
         </table>
 
     </div>
