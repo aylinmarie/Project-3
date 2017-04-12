@@ -205,6 +205,11 @@ h3.em {
 
 /*DASHBOARD*/
 
+.highlightFail {
+  background-color: #FFFF33;
+}
+}
+
 .button-functions {
 	text-align: center;
 	padding-bottom: 30px;
