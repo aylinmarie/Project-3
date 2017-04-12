@@ -16,7 +16,7 @@ Designed for teachers by teachers, our software takes the pain out of manual gra
 [Grade.ly Trello Link](https://trello.com/b/DPcM6i4c/project-3)
 
 ## Technologies 
-* Languages - HTML, CSS, Angular.js, Express.js, MongoDB
+* Languages - HTML, CSS, Angular.js, Express.js, MongoDB, Node.js
 * Design - Google Fonts, Bootstrap
 * Project Planning + User Stories - Trello
 * Atom/Sublime Text Editor
