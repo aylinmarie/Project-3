@@ -3,7 +3,7 @@
 ![Landing Screenshot](https://github.com/aylinmarie/project-3/blob/master/public/images/FireShot%20Capture%2020%20-%20Grade.ly%20-%20https___mysterious-badlands-18420.herokuapp.com_%23!_.png?raw=true)
 
 ## Overview
-Gradebook software for the modern teacher! Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software takes the pain out of manual grade entry, assignment averaging and more!
+We identified a major problem for teachers, schools, and school districts: bad gradebook and student management software. Without naming specific software, grading apps can be clunky, ineffiecent, and they can even break or not  Gradebook software for the modern teacher! Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software takes the pain out of manual grade entry, assignment averaging and more
 
 ## Link
 [Site to Grade.ly](https://mysterious-badlands-18420.herokuapp.com/#!/) [Heroku]
