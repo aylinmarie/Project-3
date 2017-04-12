@@ -7,6 +7,7 @@ function ShowController($stateParams, $scope, UsersService) {
   vm.saveGrades = saveGrades;
 
   activate();
+  
 
   function activate() {
   	loadCurrent();
@@ -50,6 +51,17 @@ function ShowController($stateParams, $scope, UsersService) {
       });
 
   }
+
+  $scope.passOrFail = function(grade) {
+
+    if (grade < 0.4) 
+      return '#e7908e'
+    else if (grade < 0.7)
+      return '#ebcccc'
+    else if (grade < 0.8)
+      return '#faf2cc'
+  }
+  
 
   $scope.getSumPointsEarned = function(student){
       var total = Number(0);

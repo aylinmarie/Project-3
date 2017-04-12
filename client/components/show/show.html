@@ -29,13 +29,12 @@
             </thead>
             <tbody>
                 <tr ng-repeat="student in $ctrl.current.students" scope="row" class="odd gradeX" label="Students">
-                    <td>{{student.lastName}}, {{student.firstName}}</td>
-                    <td>{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>
-                    <td><input type="number" name="points-earned" min="0"
+                    <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}">{{$index + 1}}. {{student.lastName}}, {{student.firstName}}</td>
+                    <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}">{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>
+                    <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}"><input type="number" name="points-earned" min="0"
                      ng-model="student.assignments[2].pointsEarned"></td>
-                    <td><input type="number" name="points-earned" min="0" ng-model="student.assignments[1].pointsEarned"></td>
-                    <td><input type="number" name="points-earned" min="0" ng-model="student.assignments[0].pointsEarned"></td>
-
+                    <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}"><input type="number" name="points-earned" min="0" ng-model="student.assignments[1].pointsEarned"></td>
+                    <td ng-style= "{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}"><input type="number" name="points-earned" min="0" ng-model="student.assignments[0].pointsEarned"></td>
                 </tr>
             </tbody>
         </table>
