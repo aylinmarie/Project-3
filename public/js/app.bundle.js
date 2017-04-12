@@ -101,7 +101,27 @@ module.exports = CreateAssignmentController;
 /* 1 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Aylin/GA/project-3/client/components/create.student/create.student.controller.js'");
+CreateStudentController.$inject = ['$stateParams', 'UsersService'];
+
+function CreateStudentController($stateParams, UsersService) {
+  const vm = this;
+
+  vm.addNewStudent = addNewStudent; // attaching the function to vm
+  vm.newStudent = {}; // initializing newStudent
+  vm.current = {};
+
+  activate();
+
+  function activate() {}
+
+  function addNewStudent() {
+    UsersService.addStudent($stateParams.userId, vm.newStudent).then(function resolve(response) {
+      vm.current = response.data.user;
+    });
+  }
+}
+
+module.exports = CreateStudentController;
 
 /***/ }),
 /* 2 */
@@ -285,9 +305,17 @@ angular.module('gradeBook').component('createAssignment', component);
 
 /***/ }),
 /* 8 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/Aylin/GA/project-3/client/components/create.student/create.student.component.js'");
+const controller = __webpack_require__(1);
+const template = __webpack_require__(19);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('gradeBook').component('createStudent', component);
 
 /***/ }),
 /* 9 */
@@ -38506,7 +38534,12 @@ module.exports = angular;
 module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new assignment. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"Name of assignment...\">\n\t</div><br>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"Test... Quiz... Project...\">\n\t</div><Br>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"Number of points...\">\n\t</div><br>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\" ng-click=\"mySubmit=true\">\n    </div>\n  </form>\n\n<div class=\"\">\n  <input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n\n\n</div>\n";
 
 /***/ }),
-/* 19 */,
+/* 19 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Student</h1><br>\n\t<form ng-submit=\"$ctrl.addNewStudent()\" class=\"form-group\" id=\"newStudent\">\n\t<div>\n\t\t<label for=\"newStudent-firstName\">First Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newStudent.firstName\"\n\t\t    placeholder=\"Janet or Joe...\">\n\t</div>\n\t<div>\n\t    <label for=\"newStudent-lastName\">Last Name: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newStudent.lastName\"\n\t    \tplaceholder=\"Smith...Trump...\">\n\t</div>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Student\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
+
+/***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
