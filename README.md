@@ -19,7 +19,11 @@ Gradebook software for the modern teacher! Reduce grade entry and calculation ti
 
 ## Future Developments
 
-* Write here.
+* Send text message to notify parent of failing grades.
+* Class average row at the bottom
+* Sorting of columns
+* Delete/Update students
+* Drilldown of each assignment.
 
 ## Portfolio
 + [Aylin Portfolio](https://www.aylinmarie.co)
