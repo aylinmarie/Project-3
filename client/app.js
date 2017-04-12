@@ -23,16 +23,16 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
       template: '<signup></signup>'
     })
     .state('show', {
-      url: '/show/:userId',
+      url: '/users/:userId',
       template: '<show></show>'
     })
     .state('createAssignment', {
       url: '/create/:userId',
       template: '<create-assignment></create-assignment>'
     })
-    .state('deleteAssignment', {
-      url: '/delete/:userId/:assignmentName',
-      template: '<delete-assignment></delete-assignment>'
+    .state('createStudent', {
+      url: '/users/:userId/students/new',
+      template: '<create-student></create-student>'
     });
 
     $urlRouterProvider.otherwise('/');

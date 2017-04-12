@@ -4,28 +4,24 @@ var Schema = mongoose.Schema;
 mongoose.promise = global.Promise;
 
 var AssignmentSchema = new Schema({
-		       name: String,
-	 assignmentType: String,
-	 	dateCreated: Date,
-	   pointsEarned: Number,
-	 	  pointsMax: Number,
-	 	    // dueDate: Date
-
+	name: String,
+	assignmentType: String,
+	dateCreated: Date,
+	pointsEarned: Number,
+	pointsMax: Number,
 });
 
 var StudentSchema = new Schema({
 	firstName: String,
-	 lastName: String,
-	 //schoolId: Number,
-	 //   image: String,
+	lastName: String,
   assignments: [AssignmentSchema],
 });
 
 var UserSchema = new Schema({
-		username: String,
-		email: String,
-		password: String,
-		students: [StudentSchema],
+	username: String,
+	email: String,
+	password: String,
+	students: [StudentSchema],
 });
 
 AssignmentSchema.pre('save', function(next){
@@ -37,7 +33,6 @@ AssignmentSchema.pre('save', function(next){
     next();
 });
 
-//might add a non-MVP classModel
 
 var UserModel = mongoose.model("User", UserSchema);
 var StudentModel = mongoose.model("Student", StudentSchema);
