@@ -4,7 +4,7 @@ var Student = require('./models/student.js');
 
 mongoose.Promise = global.Promise;
 
-var db = mongoose.connect('mongodb://localhost/project-three');
+var db = mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('error', function (err) {
   console.log(err);
