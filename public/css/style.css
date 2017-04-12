@@ -1,251 +1,257 @@
 /*GENERAL*/
 
 body, .container-fluid {
-  padding: 0px;
-  margin: 0 auto;
-  width: 100%;
-  background-color: #eee;
-  font-family: 'Lato', sans-serif;
+	padding: 0px;
+	margin: 0 auto;
+	width: 100%;
+	background-color: #eee;
+	font-family: 'Lato', sans-serif;
 }
 
 p {
-  font-size: 14px;
+	font-size: 14px;
 }
 
 label {
-  text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: .09em;
+	text-transform: uppercase;
+	font-size: 14px;
+	letter-spacing: .09em;
 }
 
 .container {
-    background-color: #fff;
-    padding-right: 15px;
-    padding-left: 15px;
-    margin-right: auto;
-    margin-left: auto;
-    border-radius: 10px;
-    background-color: #fff !important;
+	background-color: #fff;
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: auto;
+	margin-left: auto;
+	border-radius: 10px;
+	background-color: #fff !important;
 }
 
 .buttons {
-  text-align: right;
-  height: inherit;
-  padding: 20px;
-  padding-right: 60px;
+	text-align: right;
+	height: inherit;
+	padding: 20px;
+	padding-right: 60px;
 }
 
 small {
-  text-transform: uppercase;
-  font-size: 10px;
-  letter-spacing: .1em;
+	text-transform: uppercase;
+	font-size: 10px;
+	letter-spacing: .1em;
 }
 
 .btn {
-  text-transform: uppercase;
-  letter-spacing: .1em;
-  margin: 30px 0px 30px 0px;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	margin: 30px 0px 30px 0px;
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #2e527c;
-    border-color: #2e527c;
+	color: #fff;
+	background-color: #2e527c;
+	border-color: #2e527c;
 }
 
 .btn-warning:hover {
-    color: #ec971f;
-    background-color: transparent;
-    border-color: #ec971f;
+	color: #ec971f;
+	background-color: transparent;
+	border-color: #ec971f;
 }
 
 .btn-danger:hover {
-    color: #c9302c;
-    background-color: transparent;
-    border-color: #c9302c;
+	color: #c9302c;
+	background-color: transparent;
+	border-color: #c9302c;
 }
 
 .btn-info {
-    color: #fff;
-    background-color: #ff715b;
-    border-color: #ff715b;
+	color: #fff;
+	background-color: #ff715b;
+	border-color: #ff715b;
 }
 
 .btn-lg {
-  padding: 20px 50px 20px 50px;
-  border-radius: 40px;
+	padding: 20px 50px 20px 50px;
+	border-radius: 40px;
 }
 
 .fa:hover {
-  color: #ff715b;
+	color: #ff715b;
 }
 
 .btn-lg:hover {
-  background-color: transparent;
-  color: #ff715b;
-  border-color: #ff715b;
+	background-color: transparent;
+	color: #ff715b;
+	border-color: #ff715b;
 }
 
 th {
-  text-align: center;
+	text-align: center;
 }
 
 th .btn {
-  margin: 10px;
+	margin: 10px;
 }
 
+
 /*HEADER*/
+
 .brand {
-  text-align: left;
-   padding: 30px 0px 0px 60px;
+	text-align: left;
+	padding: 30px 0px 0px 60px;
 }
 
 .buttons input {
-  background-color: white;
-  color: rgba(46, 82, 124, 1);
-  border: 2px solid transparent;
-  margin: 15px;
-  border-radius: 50px;
-  padding: 10px 30px 10px 30px;
+	background-color: white;
+	color: rgba(46, 82, 124, 1);
+	border: 2px solid transparent;
+	margin: 15px;
+	border-radius: 50px;
+	padding: 10px 30px 10px 30px;
 }
 
 .buttons input:hover {
-  background-color: transparent;
-  color: white;
-  border: 2px solid white;
+	background-color: transparent;
+	color: white;
+	border: 2px solid white;
 }
 
 .nav1 {
-    margin-right: -1.2%;
-    margin-left: -1%;
-    background-color: rgba(46, 82, 124, 1);
-    padding: 5px;
-    border-bottom: 1px solid #fff;
-    box-shadow: 1px 1px 10px #fff;
+	margin-right: -1.2%;
+	margin-left: -1%;
+	background-color: rgba(46, 82, 124, 1);
+	padding: 5px;
+	border-bottom: 1px solid #fff;
+	box-shadow: 1px 1px 10px #fff;
 }
 
 .foot {
-    height: 116px;
-    background-color: #f5f5f5;
-    margin-top: 30px;
-    border-bottom: 1px solid #fff;
-    box-shadow: 1px 1px 10px #fff;
+	height: 116px;
+	background-color: #f5f5f5;
+	margin-top: 30px;
+	border-bottom: 1px solid #fff;
+	box-shadow: 1px 1px 10px #fff;
 }
 
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
-    font-weight: 500;
-    letter-spacing: .04em;
-    line-height: 1.1;
-    color: #456990;
+	font-weight: 500;
+	letter-spacing: .04em;
+	line-height: 1.1;
+	color: #456990;
 }
 
- h4, h5, h6, .h4, .h5, .h6 {
-   text-transform: uppercase;
- }
-
-.steps{
-  background-color:rgb(245, 245, 245);
-  padding-bottom: 40px;
-
+h4, h5, h6, .h4, .h5, .h6 {
+	text-transform: uppercase;
 }
+
+.steps {
+	background-color: rgb(245, 245, 245);
+	padding-bottom: 40px;
+}
+
 
 /*MAIN PAGE*/
 
 #tab1 h2 {
-  letter-spacing: .1em;
-  line-height: 1.5em;
+	letter-spacing: .1em;
+	line-height: 1.5em;
 }
 
 .index-section {
-  text-align: center;
+	text-align: center;
 }
 
-.heading{
-  text-align: center;
+.heading {
+	text-align: center;
 }
 
 .row {
-    margin-right: -15px;
-    margin-left: -15px;
-    padding-left: 10px;
+	margin-right: -15px;
+	margin-left: -15px;
+	padding-left: 10px;
 }
 
 .fa-6 {
-    font-size: 20em !important;
-    color: #ff715b;
+	font-size: 20em !important;
+	color: #ff715b;
 }
 
 .fa-4 {
-    font-size: 10em !important;
-    color: #2e527c;
+	font-size: 10em !important;
+	color: #2e527c;
 }
 
 .tab-content>.active {
-    display: inline;
+	display: inline;
 }
 
+
 /*SIGN UP and LOGIN PAGE*/
+
 .signup-section, .login-section {
-  min-width: 300px;
-  max-width: 300px;
-  text-align: center;
-  height: 530px;
+	min-width: 300px;
+	max-width: 300px;
+	text-align: center;
+	height: 530px;
 }
 
 h3.em {
-  color: #ff715b;
-  text-transform: uppercase;
-  letter-spacing: .1em;
+	color: #ff715b;
+	text-transform: uppercase;
+	letter-spacing: .1em;
 }
+
 
 /*DASHBOARD*/
 
 .button-functions {
-  text-align: center;
-  padding-bottom: 30px;
+	text-align: center;
+	padding-bottom: 30px;
 }
 
 .button-functions input {
-  margin: 0px 20px 20px 20px;
+	margin: 0px 20px 20px 20px;
 }
 
 .create, .login-section, .signup-section {
-  min-width: 350px;
-  max-width: 400px;
-  text-align: center;
-  font-size: 17px;
+	min-width: 350px;
+	max-width: 400px;
+	text-align: center;
+	font-size: 17px;
 }
 
 .create form input {
-  font-size: 16px;
-  padding: 25px;
+	font-size: 16px;
+	padding: 25px;
 }
 
 .alert button {
-  margin: 5px;
-  border-radius: 20px;
-  background: white;
-  border-color: #456990;
-  color: #456990;
-  font-size: 10px;
+	margin: 5px;
+	border-radius: 20px;
+	background: white;
+	border-color: #456990;
+	color: #456990;
+	font-size: 10px;
 }
 
 form#newAssignment .btn {
-  padding: 15px 40px 15px 40px;
+	padding: 15px 40px 15px 40px;
 }
 
 
 /*FOOTER*/
+
 .show-footer {
-  text-align: center;
+	text-align: center;
 }
 
 .foot {
-  padding: 30px 0px 30px 0px;
-  text-align: center;
+	padding: 30px 0px 30px 0px;
+	text-align: center;
 }
 
 .foot small {
-  text-align: center;
-  font-size: 11px;
+	text-align: center;
+	font-size: 11px;
 }

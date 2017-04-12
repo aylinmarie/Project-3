@@ -27,8 +27,6 @@ router.put('/:id', function deleteAction(request, response) {
   }).exec(function(error, user) {
       console.log('%c user ', 'background: #222; color: #bada55', user)
 
-
-
     user.students.forEach(function (student) {
       console.log("from delete.js indexOf project name:" +
       student.assignments.map(x => x.name).indexOf(assignmentName));
