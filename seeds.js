@@ -5,7 +5,6 @@ var Student = require('./models/student.js');
 mongoose.Promise = global.Promise;
 
 var db = mongoose.connect('mongodb://localhost/project-three');
-//mongoose.connect(process.env.MONGODB_URI);
 
 mongoose.connection.on('error', function (err) {
   console.log(err);
@@ -43,11 +42,11 @@ var users = [ {
   	students: testStudents
 	},
 	{
-	  	username: 'Mr. Hernquist',
-	  	email: '123@123.com',
-	  	password: '123',
-	  	students: testStudents
-	  	}  ];
+  	username: 'Mr. Hernquist',
+  	email: '123@123.com',
+  	password: '123',
+  	students: testStudents
+  	}  ];
 
 User.remove({})
   .then(function(){
