@@ -106,9 +106,8 @@ CreateStudentController.$inject = ['$stateParams', 'UsersService'];
 function CreateStudentController($stateParams, UsersService) {
   const vm = this;
 
-  //vm.loadCurrent = loadCurrent;
-  vm.addNewStudent = addNewStudent; //attaching the function to vm
-  vm.newStudent = {}; //initializing newStudent
+  vm.addNewStudent = addNewStudent; // attaching the function to vm
+  vm.newStudent = {}; // initializing newStudent
   vm.current = {};
 
   activate();
@@ -116,14 +115,8 @@ function CreateStudentController($stateParams, UsersService) {
   function activate() {}
 
   function addNewStudent() {
-    console.log('this is from addNewAssignment' + vm.newStudent.firstname);
-
-    //how the form data make it to the controller server-side???
-    console.log("userID" + $stateParams.userId);
-    UsersService.addStudent($stateParams.userId, vm.newStudent.firstNname, vm.newStudent.lastName).then(function resolve(response) {
-      console.log("function working!");
+    UsersService.addStudent($stateParams.userId, vm.newStudent).then(function resolve(response) {
       vm.current = response.data.user;
-      console.log("Back from the server!" + vm.current);
     });
   }
 }
@@ -282,13 +275,14 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
     url: '/signup',
     template: '<signup></signup>'
   }).state('show', {
-    url: '/show/:userId',
+    url: '/users/:userId',
     template: '<show></show>'
   }).state('createAssignment', {
     url: '/create/:userId',
+    // url: '/users/:userId/assignments/new', // What you want to aim for
     template: '<create-assignment></create-assignment>'
   }).state('createStudent', {
-    url: '/newStudent/:userId',
+    url: '/users/:userId/students/new',
     template: '<create-student></create-student>'
   });
 
@@ -410,12 +404,12 @@ UsersService.$inject = ['$http'];
 function UsersService($http) {
 	const self = this;
 
-	self.loadCurrent = loadCurrent;
 	self.addAssignment = addAssignment;
-	self.signupUser = signupUser;
-	self.deleteAssignment = deleteAssignment;
-	self.saveNewGrade = saveNewGrade;
 	self.addStudent = addStudent;
+	self.deleteAssignment = deleteAssignment;
+	self.loadCurrent = loadCurrent;
+	self.saveNewGrade = saveNewGrade;
+	self.signupUser = signupUser;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -429,12 +423,10 @@ function UsersService($http) {
 		});
 	}
 
-	function addStudent(id, firstName, lastName) {
-		console.log(lastName);
-		return $http.put('/api/students/' + id, {
-			firstName: firstName,
-			lastName: lastName
-		});
+	function addStudent(userId, student) {
+		var studentsUrl = `/api/users/${userId}/students`;
+
+		return $http.post(studentsUrl, student);
 	}
 
 	function signupUser(email, username, password) {

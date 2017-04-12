@@ -55,7 +55,7 @@ router.put('/:id', function updateAction(request, response) {
 
 //signup
 
-router.post('/', function newUser(request, response) {
+router.post('/', function createAction(request, response) {
   console.log('We hit the BE server');
 
   var user = new User({

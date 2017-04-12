@@ -23,15 +23,16 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
       template: '<signup></signup>'
     })
     .state('show', {
-      url: '/show/:userId',
+      url: '/users/:userId',
       template: '<show></show>'
     })
     .state('createAssignment', {
       url: '/create/:userId',
+      // url: '/users/:userId/assignments/new', // What you want to aim for
       template: '<create-assignment></create-assignment>'
     })
     .state('createStudent', {
-      url: '/newStudent/:userId',
+      url: '/users/:userId/students/new',
       template: '<create-student></create-student>'
     });
 

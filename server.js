@@ -37,7 +37,8 @@ var gradesController = require('./controllers/grades.js');
 app.use('/api/grades', gradesController);
 
 var studentsController = require('./controllers/students.js');
-app.use('/api/students', studentsController);
+// app.use('/api/students', studentsController); // old
+app.use('/api/users/:userId/students', studentsController);
 
 app.listen(process.env.PORT || 3000, function() {
   console.log("We are up and running...");

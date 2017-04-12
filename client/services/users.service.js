@@ -5,14 +5,15 @@ angular
 UsersService.$inject = ['$http'];
 
 function UsersService($http) {
-		const self = this;
+	const self = this;
 
-		self.loadCurrent = loadCurrent;
-		self.addAssignment = addAssignment;
-		self.signupUser = signupUser;
-		self.deleteAssignment = deleteAssignment;
-		self.saveNewGrade = saveNewGrade;
-		self.addStudent = addStudent;
+	self.addAssignment = addAssignment;
+	self.addStudent = addStudent;
+	self.deleteAssignment = deleteAssignment;
+	self.loadCurrent = loadCurrent;
+	self.saveNewGrade = saveNewGrade;
+	self.signupUser = signupUser;
+
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -27,20 +28,17 @@ function UsersService($http) {
 			});
 	}
 
-	function addStudent(id, firstName, lastName) {
-		console.log(lastName);
-		return $http
-			.put('/api/students/' + id, {
-				firstName : firstName,
-				lastName  : lastName
-			});
+	function addStudent(userId, student) {
+		var studentsUrl = `/api/users/${userId}/students`;
+		
+		return $http.post(studentsUrl, student);
 	}
 
 	function signupUser(email, username, password) {
 		console.log('password' + password)
 		return $http	
 			.post('/api/users/', {
-				email   : email,
+				email    : email,
 				username : username,
 				password : password
 			});
