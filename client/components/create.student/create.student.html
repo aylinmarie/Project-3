@@ -1,0 +1,26 @@
+<div class="create container-fluid">
+   <h1>Add Student</h1><br>
+	<form ng-submit="$ctrl.addNewStudent()" class="form-group" id="newStudent">
+	<div>
+		<label for="newStudent-firstName">First Name: </label>
+		<input class="form-control" type="text"
+		    ng-model="$ctrl.newStudent.firstName"
+		    placeholder="Janet or Joe...">
+	</div> 
+	<div>
+	    <label for="newStudent-lastName">Last Name: </label>
+	    <input class="form-control" type="text"
+	    	ng-model="$ctrl.newStudent.lastName"
+	    	placeholder="Smith...Trump...">
+	</div>
+	
+    <div>
+      <input class="btn btn-primary" type="submit" value="Add Student">
+    </div><br>
+  </form>
+
+
+<div>
+	<input onclick="history.back(-1)" class="btn btn-default" type="submit" value="Go Back">
+</div>
+</div>
