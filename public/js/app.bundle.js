@@ -284,7 +284,6 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
     template: '<show></show>'
   }).state('createAssignment', {
     url: '/create/:userId',
-    // url: '/users/:userId/assignments/new', // What you want to aim for
     template: '<create-assignment></create-assignment>'
   }).state('createStudent', {
     url: '/users/:userId/students/new',
@@ -38542,7 +38541,7 @@ module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert
 /* 19 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"create container-fluid\">\n   <h1>Add Student</h1><br>\n\t<form ng-submit=\"$ctrl.addNewStudent()\" class=\"form-group\" id=\"newStudent\">\n\t<div>\n\t\t<label for=\"newStudent-firstName\">First Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newStudent.firstName\"\n\t\t    placeholder=\"Janet or Joe...\">\n\t</div> \n\t<div>\n\t    <label for=\"newStudent-lastName\">Last Name: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newStudent.lastName\"\n\t    \tplaceholder=\"Smith...Trump...\">\n\t</div>\n\t\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Student\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Student</h1><br>\n\t<form ng-submit=\"$ctrl.addNewStudent()\" class=\"form-group\" id=\"newStudent\">\n\t<div>\n\t\t<label for=\"newStudent-firstName\">First Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newStudent.firstName\"\n\t\t    placeholder=\"Janet or Joe...\">\n\t</div>\n\t<div>\n\t    <label for=\"newStudent-lastName\">Last Name: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newStudent.lastName\"\n\t    \tplaceholder=\"Smith...Trump...\">\n\t</div>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Student\" ng-click=\"mySubmit=true\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
 /* 20 */

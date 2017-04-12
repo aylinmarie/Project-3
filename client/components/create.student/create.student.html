@@ -1,4 +1,11 @@
 <div class="create container-fluid">
+
+  <div class="alert alert-success alert-dismissable fade in" ng-show="mySubmit">
+    <a onclick="history.go(0)" VALUE="Refresh" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <h5><strong>Success!</strong> You have added a new student. </h5>
+    <button onclick="history.go(0)" type="button" name="button" class="btn btn-default"> Add Another</button>
+  </div>
+
    <h1>Add Student</h1><br>
 	<form ng-submit="$ctrl.addNewStudent()" class="form-group" id="newStudent">
 	<div>
@@ -6,16 +13,16 @@
 		<input class="form-control" type="text"
 		    ng-model="$ctrl.newStudent.firstName"
 		    placeholder="Janet or Joe...">
-	</div> 
+	</div>
 	<div>
 	    <label for="newStudent-lastName">Last Name: </label>
 	    <input class="form-control" type="text"
 	    	ng-model="$ctrl.newStudent.lastName"
 	    	placeholder="Smith...Trump...">
 	</div>
-	
+
     <div>
-      <input class="btn btn-primary" type="submit" value="Add Student">
+      <input class="btn btn-primary" type="submit" value="Add Student" ng-click="mySubmit=true">
     </div><br>
   </form>
 

@@ -8,8 +8,6 @@ var User = require('../models/user');
 var logger = require('morgan');
 
 
-
-
 //=============================
 // Show Page (User Logged In)
 //=============================
@@ -53,8 +51,9 @@ router.put('/:id', function updateAction(request, response) {
   })
 });
 
-//signup
-
+//======================
+// SIGNUP 
+//======================
 router.post('/', function createAction(request, response) {
   console.log('We hit the BE server');
 
@@ -66,11 +65,10 @@ router.post('/', function createAction(request, response) {
   console.log('we have' + user)
   user.save(function(error) {
   if(error) response.json({messsage: 'Could not ceate user b/c:' + error});
-  
+
   response.json({user: user});
   })
 
 })
 
 module.exports = router;
-
