@@ -24,9 +24,9 @@ Gradebook software for the modern teacher! Reduce grade entry and calculation ti
 ## Portfolio
 + [Aylin Portfolio](https://www.aylinmarie.co)
 
-+ [David Portfolio]()
++ [David Portfolio](http://davidhernquest.com)
 
-+ [Jibril Portfolio]()
++ [Jibril Portfolio](http://jibrilsulaiman.com/portfolio)
 
 ## Wireframes
 

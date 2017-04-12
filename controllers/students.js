@@ -26,8 +26,6 @@ router.post('/', function createAction(request, response) {
     assignments : []
   });
 
-  // pseudo code
-  // Find that user
   User
     .findById(userId)
     .exec(function whatever(err, user) {
@@ -43,7 +41,7 @@ router.post('/', function createAction(request, response) {
           clonedAssignment.pointsEarned = 0;
           newStudent.assignments.push(clonedAssignment);
         })
-      } 
+      }
 
       // Push this new student into their .students array
       user.students.push(newStudent);
@@ -52,26 +50,7 @@ router.post('/', function createAction(request, response) {
 
       // return { student: student }
       response.send({ student: newStudent });
-    })
-
-  
-      
-  
-
-
-  /*
-    user.students.forEach(function (student) {
-      console.log("from delete.js indexOf project name:" +
-      student.assignments.map(x => x.name).indexOf(assignmentName));
-      var index = student.assignments.map(x => x.name).indexOf(assignmentName);
-      student.assignments.splice(index, 1); //might be able to just stick in assignmentName. Also might use assignmentName and then index
-
-
     });
-  user.save();
-  response.json({user:user});
-  });*/
-
-});
+  });
 
 module.exports = router;

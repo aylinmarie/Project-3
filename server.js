@@ -4,8 +4,6 @@ const express = require('express');
 const logger = require('morgan');
 const app = express();
 const bodyParser = require('body-parser');
-
-
 const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGODB_URI);
@@ -26,9 +24,6 @@ app.use('/api/users', usersController);
 
 var deleteController = require('./controllers/delete.js');
 app.use('/api/delete', deleteController);
-
-var sessionsController = require('./controllers/sessions.js');
-app.use('/api/sessions', sessionsController);
 
 var loginController = require('./controllers/login.js');
 app.use('/api/login', loginController);
