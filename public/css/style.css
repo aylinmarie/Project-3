@@ -42,21 +42,15 @@ small {
 }
 
 .btn {
-<<<<<<< HEAD
-<<<<<<< HEAD
   text-transform: uppercase;
   letter-spacing: .1em;
   margin: 30px 0px 30px 0px;
-=======
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	margin: 30px 0px 30px 0px;
->>>>>>> 69aff408852d3d49cb0d610fd51cc288c5b3d285
-=======
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	margin: 30px 0px 30px 0px;
->>>>>>> david-branch
 }
 
 .btn-primary {
@@ -106,6 +100,10 @@ th .btn {
 	margin: 10px;
 }
 
+.class-avg {
+	text-align: left;
+}
+
 
 /*HEADER*/
 
@@ -115,8 +113,7 @@ th .btn {
 }
 
 .buttons input {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
   background-color: white;
   color: rgba(46, 82, 124, 1);
   border: 2px solid transparent;
@@ -129,9 +126,6 @@ th .btn {
   background-color: transparent;
   color: white;
   border: 2px solid white;
-=======
-=======
->>>>>>> david-branch
 	background-color: white;
 	color: rgba(46, 82, 124, 1);
 	border: 2px solid transparent;
@@ -235,10 +229,6 @@ h3.em {
   letter-spacing: .1em;
 }
 
-	color: #ff715b;
-	text-transform: uppercase;
-	letter-spacing: .1em;
-}
 
 
 /*DASHBOARD*/
