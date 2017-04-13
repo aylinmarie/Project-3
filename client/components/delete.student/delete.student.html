@@ -1,0 +1,41 @@
+<div class="create container-fluid">
+
+  <!-- <div class="alert alert-success alert-dismissable fade in" ng-show="mySubmit">
+    <a onclick="history.go(0)" VALUE="Refresh" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <h5><strong>Success!</strong> You have deleted a new student. </h5>
+    <button onclick="history.go(0)" type="button" name="button" class="btn btn-default"> Delete Another </button>
+  </div> -->
+
+  <h1>Delete Student</h1><br>
+
+   
+		<form ng-submit="$ctrl.deleteStudent(newStudent)"
+		 	class="form-group">
+   	  <select ng-model="$ctrl.selected.student" id="newStudent">
+
+				<option
+	        ng-repeat="student in $ctrl.current.students" 
+	      	ng-selected="{{student == $ctrl.selected.student}}"
+	  			value="{{student}}"
+	       >{{student.lastName}}, {{student.firstName}}</option>
+	 		
+	 	 </select>
+
+	 	 <div>{{$ctrl.selected.student}}</div>
+	 	 <div>{{student.firstName}} {{student.lastName}} </div>
+	 	 
+    <div>
+      <input class="btn btn-primary" 
+      value="{{$ctrl.selected}}"
+      type="submit" >
+    </form>
+<!--  value="Delete {{$ctrl.selected.student}}" 
+ 			ng-click="mySubmit=true" -->
+    </div>
+    <br>
+  </div>
+<!-- 
+	<div>
+		<input onclick="history.back(-1)" class="btn btn-default" type="submit" value="Go Back">
+	</div> -->
+</div>

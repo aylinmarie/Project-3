@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -127,6 +127,49 @@ module.exports = CreateStudentController;
 /* 2 */
 /***/ (function(module, exports) {
 
+DeleteStudentController.$inject = ['$stateParams', 'UsersService'];
+
+function DeleteStudentController($stateParams, UsersService) {
+  const vm = this;
+
+  vm.deleteStudent = deleteStudent; // attaching the function to vm
+  vm.loadCurrent = loadCurrent;
+  //vm.selected.student = {};               // initializing newStudent
+  vm.current = {};
+
+  activate();
+
+  function activate() {
+    loadCurrent();
+  }
+
+  function loadCurrent() {
+
+    UsersService.loadCurrent($stateParams.userId).then(function resolve(response) {
+      vm.current = response.data.user;
+    });
+  }
+
+  function deleteStudent(newStudent) {
+    console.log("Made to deleteStudent " + document.getElementById('newStudent').selectedIndex);
+    console.log("Delete student selected" + vm.selected.student);
+    console.log("XXX" + vm.selected.student.lastName);
+
+    studentSelectedIndex = document.getElementById('newStudent').selectedIndex;
+
+    UsersService.removeStudent($stateParams.userId, studentSelectedIndex).then(function resolve(response) {
+      vm.current = response.data.user;
+      //do I need to splice out 
+    });
+  }
+}
+
+module.exports = DeleteStudentController;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
 HomeController.$inject = [];
 
 function HomeController() {
@@ -136,7 +179,7 @@ function HomeController() {
 module.exports = HomeController;
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 LoginController.$inject = ['$state', 'AuthService'];
@@ -159,7 +202,7 @@ function LoginController($state, AuthService) {
 module.exports = LoginController;
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 ShowController.$inject = ['$stateParams', '$scope', 'UsersService'];
@@ -245,7 +288,7 @@ function ShowController($stateParams, $scope, UsersService) {
 module.exports = ShowController;
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports) {
 
 SignupController.$inject = ['$state', 'UsersService'];
@@ -273,11 +316,11 @@ function SignupController($state, UsersService) {
 module.exports = SignupController;
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const angular = __webpack_require__(17);
-__webpack_require__(15);
+const angular = __webpack_require__(19);
+__webpack_require__(17);
 
 angular.module('gradeBook', ['ui.router']).config(uiRouterSetup);
 
@@ -303,17 +346,19 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
   }).state('createStudent', {
     url: '/users/:userId/students/new',
     template: '<create-student></create-student>'
+  }).state('deleteStudent', {
+    url: '/users/:userId/students/delete',
+    template: '<delete-student></delete-student>'
   });
-
   $urlRouterProvider.otherwise('/');
 }
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(0);
-const template = __webpack_require__(18);
+const template = __webpack_require__(20);
 
 const component = {
   controller: controller,
@@ -323,11 +368,11 @@ const component = {
 angular.module('gradeBook').component('createAssignment', component);
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(1);
-const template = __webpack_require__(19);
+const template = __webpack_require__(21);
 
 const component = {
   controller: controller,
@@ -337,11 +382,25 @@ const component = {
 angular.module('gradeBook').component('createStudent', component);
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 const controller = __webpack_require__(2);
-const template = __webpack_require__(20);
+const template = __webpack_require__(22);
+
+const component = {
+  controller: controller,
+  template: template
+};
+
+angular.module('gradeBook').component('deleteStudent', component);
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const controller = __webpack_require__(3);
+const template = __webpack_require__(23);
 
 const component = {
   controller: controller,
@@ -351,11 +410,11 @@ const component = {
 angular.module('gradeBook').component('home', component);
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(3);
-const template = __webpack_require__(21);
+const controller = __webpack_require__(4);
+const template = __webpack_require__(24);
 
 const component = {
   controller: controller,
@@ -365,11 +424,11 @@ const component = {
 angular.module('gradeBook').component('login', component);
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(4);
-const template = __webpack_require__(22);
+const controller = __webpack_require__(5);
+const template = __webpack_require__(25);
 
 const component = {
   controller: controller,
@@ -379,11 +438,11 @@ const component = {
 angular.module('gradeBook').component('show', component);
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
-const controller = __webpack_require__(5);
-const template = __webpack_require__(23);
+const controller = __webpack_require__(6);
+const template = __webpack_require__(26);
 
 const component = {
   controller: controller,
@@ -393,7 +452,7 @@ const component = {
 angular.module('gradeBook').component('signup', component);
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports) {
 
 angular.module('gradeBook').service('AuthService', AuthService);
@@ -413,7 +472,7 @@ function AuthService($http) {
 }
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 angular.module('gradeBook').service('UsersService', UsersService);
@@ -429,6 +488,7 @@ function UsersService($http) {
 	self.loadCurrent = loadCurrent;
 	self.saveNewGrade = saveNewGrade;
 	self.signupUser = signupUser;
+	self.removeStudent = removeStudent;
 
 	function loadCurrent(id) {
 		return $http.get('/api/users/' + id);
@@ -446,6 +506,13 @@ function UsersService($http) {
 		var studentsUrl = `/api/users/${userId}/students`;
 
 		return $http.post(studentsUrl, student);
+	}
+
+	function removeStudent(userId, studentSelectedIndex) {
+		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
+		var studentsUrl = `/api/users/${userId}/student`;
+
+		return $http.delete(studentsUrl, studentSelectedIndex);
 	}
 
 	function signupUser(email, username, password) {
@@ -473,7 +540,7 @@ function UsersService($http) {
 }
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 /**
@@ -5162,7 +5229,7 @@ angular.module('ui.router.state')
 })(window, window.angular);
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 /**
@@ -38539,68 +38606,76 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(16);
+__webpack_require__(18);
 module.exports = angular;
 
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new assignment. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"Name of assignment...\">\n\t</div><br>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"Test... Quiz... Project...\">\n\t</div><Br>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"Number of points...\">\n\t</div><br>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\" ng-click=\"mySubmit=true\">\n    </div>\n  </form>\n\n<div class=\"\">\n  <input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n\n\n</div>\n";
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Student</h1><br>\n\t<form ng-submit=\"$ctrl.addNewStudent()\" class=\"form-group\" id=\"newStudent\">\n\t<div>\n\t\t<label for=\"newStudent-firstName\">First Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newStudent.firstName\"\n\t\t    placeholder=\"Janet or Joe...\">\n\t</div>\n\t<div>\n\t    <label for=\"newStudent-lastName\">Last Name: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newStudent.lastName\"\n\t    \tplaceholder=\"Smith...Trump...\">\n\t</div>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Student\" ng-click=\"mySubmit=true\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
 /* 20 */
 /***/ (function(module, exports) {
 
-module.exports = "\n<body class=\"container-fluid index-section\">\n\t<div class=\"container\">\n\t\t<div class=\"row slider\" id=\"tabs-home\" style=\"\">\n\t\t\t<!-- tab content -->\n\n\n\t\t\t<div class=\"col-sm-12 tab-content container\" id=\"wea\">\n\t\t\t\t<div class=\"tab-pane active text-style fade in active container\" id=\"tab1\">\n\t\t\t\t\t<center>\n\t\t\t\t\t\t<h2>GRADEBOOK SOFTWARE <br>FOR THE MODERN TEACHER</h2>\n\n\t\t\t\t\t<p><strong>Made for teachers, by teachers!</strong></p><br>\n\t\t\t\t</center>\n\n\n\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t<div class=\"panel-heading\">\n\t\t\t\t\t\t\t<h3 class=\"panel-title\">\n\t\t\t\t\t\t\t</h3>\n\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t<div class=\"row features-home-right\">\n\t\t\t\t\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t\t\t\t\t<center>\n\t\t\t\t\t\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-clock-o fa-6\"></i>\n\t\t\t\t\t\t\t\t\t</center>\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<div class=\"col-md-7\">\n\t\t\t\t\t\t\t\t\t<div class=\"color\">\n\t\t\t\t\t\t\t\t\t\t<h3>Less Time Grading, More Time Teaching</h3>\n\n\t\t\t\t\t\t\t\t\t\t<h4>the most advanced grading software on market</h4><br>\n\n\t\t\t\t\t\t\t\t\t\t<p>Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software\n\t\t\t\t\t\t\t\t\t\ttakes the pain out of manual grade entry, assignment averaging and more!</p>\n\t\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<a class=\"btn btn-primary btn-lg\" href=\"#!/signup\" type=\"submit\">Sign Up Today!</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row press-quotes\">\n\t\t</div>\n\n\t\t<div class=\"row steps\">\n\t\t\t<h3 class=\"heading em\">3 easy steps to get started!</h3>\n\t\t\t<br>\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-user-plus fa-4\"></i>\n\n\t\t\t\t\t<h5>Sign Up</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-laptop fa-4\"></i>\n\n\t\t\t\t\t<h5>Import Student Information</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-pencil-square-o fa-4\"></i>\n\n\t\t\t\t\t<h5>Enter Grades Faster Than Ever</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"row\">\n\t\t\t<div class=\"col-md-12 one-column-text\">\n\t\t\t\t<center>\n\t\t\t\t\t<h3 class=\"em\" style=\"font-size:24px;\">Individual Schools and Entire School Districts</h3>\n\t\t\t\t\t<h6>Serving Individual Teachers</h6>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row buttons-who-we-are\">\n\t\t\t<div>\n        <center>\n\t\t\t\t<a class=\"btn btn-primary btn-lg\" ui-sref=\"signup\" type=\"submit\">Teacher Registration</a>\n      </center>\n\t\t\t</div>\n\n\t\t</div>\n\n\t</div>\n</body>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new assignment. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Assignment</h1><br>\n\t<form ng-submit=\"$ctrl.addNewAssignment()\" class=\"form-group\" id=\"newAssignment\">\n\t<div>\n\t\t<label for=\"newAssignment-name\">Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newAssignment.name\"\n\t\t    placeholder=\"Name of assignment...\">\n\t</div><br>\n\t<div>\n\t    <label for=\"newAssignment-assignmentType\">Assignment Type: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.assignmentType\"\n\t    \tplaceholder=\"Test... Quiz... Project...\">\n\t</div><Br>\n\t<div>\n\t    <label for=\"newAssignment-pointsMax\">Max Points: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newAssignment.pointsMax\"\n\t    \tplaceholder=\"Number of points...\">\n\t</div><br>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Assignment\" ng-click=\"mySubmit=true\">\n    </div>\n  </form>\n\n<div class=\"\">\n  <input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n\n\n</div>\n";
 
 /***/ }),
 /* 21 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2><br>\n\n  <form ng-submit=\"$ctrl.loginUnauth()\"\n        class=\"form-group\"\n        name=\"loginForm\">\n\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\"\n           required>\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\"\n           required>\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <p>First time? <a ui-sref=\"signup\">Start here.</a> </p>\n\n\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have added a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Add Another</button>\n  </div>\n\n   <h1>Add Student</h1><br>\n\t<form ng-submit=\"$ctrl.addNewStudent()\" class=\"form-group\" id=\"newStudent\">\n\t<div>\n\t\t<label for=\"newStudent-firstName\">First Name: </label>\n\t\t<input class=\"form-control\" type=\"text\"\n\t\t    ng-model=\"$ctrl.newStudent.firstName\"\n\t\t    placeholder=\"Janet or Joe...\">\n\t</div>\n\t<div>\n\t    <label for=\"newStudent-lastName\">Last Name: </label>\n\t    <input class=\"form-control\" type=\"text\"\n\t    \tng-model=\"$ctrl.newStudent.lastName\"\n\t    \tplaceholder=\"Smith...Trump...\">\n\t</div>\n\n    <div>\n      <input class=\"btn btn-primary\" type=\"submit\" value=\"Add Student\" ng-click=\"mySubmit=true\">\n    </div><br>\n  </form>\n\n\n<div>\n\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n</div>\n</div>\n";
 
 /***/ }),
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <h3>{{$ctrl.current.username}}'s Students</h3>\n    </div>\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n        <table width=\"100%\" id=\"example\" class=\"table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n            <thead>\n                <tr ng=\"student in $ctrl.current.students\">\n                    <th>Students</th>\n                    <th>Grades</th>\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(2)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                    {{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(1)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(0)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\">{{$index + 1}}. {{student.lastName}}, {{student.firstName}}</td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\">{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\"\n                     ng-model=\"student.assignments[2].pointsEarned\"></td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                </tr>\n            </tbody>\n            <thead>\n              <tr>\n                <th>Class Averages</th>\n                <th ng-style= \"{ 'background-color' : passOrFail(runClassAverage())}\">{{ runClassAverage()*100 | number: 1}}%</th>\n                <th></th>\n                <th></th>\n                <th></th>\n              </tr>\n            </thead>\n        </table>\n\n    </div>\n\n  <br>\n  <center>\n    <div class=\"button-functions\">\n      <input ng-click=\"$ctrl.saveGrades()\" class=\"btn btn-warning\" type=\"submit\" value=\"Save Grades\">\n      <input ui-sref=\"createAssignment({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n      <input ui-sref=\"createStudent({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Student\">\n    </div>\n  </center>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-danger\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <!-- <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have deleted a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Delete Another </button>\n  </div> -->\n\n  <h1>Delete Student</h1><br>\n\n   \n\t\t<form ng-submit=\"$ctrl.deleteStudent(newStudent)\"\n\t\t \tclass=\"form-group\">\n   \t  <select ng-model=\"$ctrl.selected.student\" id=\"newStudent\">\n\n\t\t\t\t<option\n\t        ng-repeat=\"student in $ctrl.current.students\" \n\t      \tng-selected=\"{{student == $ctrl.selected.student}}\"\n\t  \t\t\tvalue=\"{{student}}\"\n\t       >{{student.lastName}}, {{student.firstName}}</option>\n\t \t\t\n\t \t </select>\n\n\t \t <div>{{$ctrl.selected.student}}</div>\n\t \t <div>{{student.firstName}} {{student.lastName}} </div>\n\t \t \n    <div>\n      <input class=\"btn btn-primary\" \n      value=\"{{$ctrl.selected}}\"\n      type=\"submit\" >\n    </form>\n<!--  value=\"Delete {{$ctrl.selected.student}}\" \n \t\t\tng-click=\"mySubmit=true\" -->\n    </div>\n    <br>\n  </div>\n<!-- \n\t<div>\n\t\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\t</div> -->\n</div>\n";
 
 /***/ }),
 /* 23 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"signup-section container-fluid\">\n  <h2>Signup</h2><br>\n\n  <form ng-submit=\"$ctrl.addNewUser()\" class=\"form-group\" id=\"newUser\">\n    <label>Email:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.email\" name=\"email\"><br>\n\n    <label>Username:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.username\" name=\"username\"><br>\n\n    <label>Password</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.password\" name=\"password\"><br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"\n     value=\"Submit\">\n  </form>\n  <br>\n\n  <p>Already have an account? <a ui-sref=\"login\">Log in here.</a> </p>\n\n</div>\n";
+module.exports = "\n<body class=\"container-fluid index-section\">\n\t<div class=\"container\">\n\t\t<div class=\"row slider\" id=\"tabs-home\" style=\"\">\n\t\t\t<!-- tab content -->\n\n\n\t\t\t<div class=\"col-sm-12 tab-content container\" id=\"wea\">\n\t\t\t\t<div class=\"tab-pane active text-style fade in active container\" id=\"tab1\">\n\t\t\t\t\t<center>\n\t\t\t\t\t\t<h2>GRADEBOOK SOFTWARE <br>FOR THE MODERN TEACHER</h2>\n\n\t\t\t\t\t<p><strong>Made for teachers, by teachers!</strong></p><br>\n\t\t\t\t</center>\n\n\n\t\t\t\t\t<div class=\"panel panel-default\">\n\t\t\t\t\t\t<div class=\"panel-heading\">\n\t\t\t\t\t\t\t<h3 class=\"panel-title\">\n\t\t\t\t\t\t\t</h3>\n\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t<div class=\"panel-body\">\n\t\t\t\t\t\t\t<div class=\"row features-home-right\">\n\t\t\t\t\t\t\t\t<div class=\"col-md-5\">\n\t\t\t\t\t\t\t\t\t<center>\n\t\t\t\t\t\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-clock-o fa-6\"></i>\n\t\t\t\t\t\t\t\t\t</center>\n\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t<div class=\"col-md-7\">\n\t\t\t\t\t\t\t\t\t<div class=\"color\">\n\t\t\t\t\t\t\t\t\t\t<h3>Less Time Grading, More Time Teaching</h3>\n\n\t\t\t\t\t\t\t\t\t\t<h4>the most advanced grading software on market</h4><br>\n\n\t\t\t\t\t\t\t\t\t\t<p>Reduce grade entry and calculation time using Gradely. Designed for teachers by teachers, our software\n\t\t\t\t\t\t\t\t\t\ttakes the pain out of manual grade entry, assignment averaging and more!</p>\n\t\t\t\t\t\t\t\t\t</div>\n\n\n\t\t\t\t\t\t\t\t\t<div>\n\t\t\t\t\t\t\t\t\t\t<a class=\"btn btn-primary btn-lg\" href=\"#!/signup\" type=\"submit\">Sign Up Today!</a>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row press-quotes\">\n\t\t</div>\n\n\t\t<div class=\"row steps\">\n\t\t\t<h3 class=\"heading em\">3 easy steps to get started!</h3>\n\t\t\t<br>\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-user-plus fa-4\"></i>\n\n\t\t\t\t\t<h5>Sign Up</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-laptop fa-4\"></i>\n\n\t\t\t\t\t<h5>Import Student Information</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\n\n\t\t\t<div class=\"col-md-4\">\n\t\t\t\t<center>\n\t\t\t\t\t<i aria-hidden=\"true\" class=\"fa fa-pencil-square-o fa-4\"></i>\n\n\t\t\t\t\t<h5>Enter Grades Faster Than Ever</h5>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\t\t<div class=\"row\">\n\t\t\t<div class=\"col-md-12 one-column-text\">\n\t\t\t\t<center>\n\t\t\t\t\t<h3 class=\"em\" style=\"font-size:24px;\">Individual Schools and Entire School Districts</h3>\n\t\t\t\t\t<h6>Serving Individual Teachers</h6>\n\t\t\t\t</center>\n\t\t\t</div>\n\t\t</div>\n\n\n\t\t<div class=\"row buttons-who-we-are\">\n\t\t\t<div>\n        <center>\n\t\t\t\t<a class=\"btn btn-primary btn-lg\" ui-sref=\"signup\" type=\"submit\">Teacher Registration</a>\n      </center>\n\t\t\t</div>\n\n\t\t</div>\n\n\t</div>\n</body>\n";
 
 /***/ }),
 /* 24 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"login-section container-fluid\">\n  <h2>Login</h2><br>\n\n  <form ng-submit=\"$ctrl.loginUnauth()\"\n        class=\"form-group\"\n        name=\"loginForm\">\n\n    <label>Email:</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"email\"\n           ng-model=\"$ctrl.login.email\"\n           required>\n           <small><div style=\"color: grey\" ng-message=\"required\">Email is required</div></small>\n           <br>\n\n    <label>Password</label>\n    <input class=\"form-control\"\n           type=\"text\"\n           name=\"password\"\n           ng-model=\"$ctrl.login.password\"\n           required>\n    <small><div style=\"color: grey\" ng-message=\"required\">Password is required</div></small>\n    <br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"  value=\"submit\">\n  </form><br>\n\n\n  <p>First time? <a ui-sref=\"signup\">Start here.</a> </p>\n\n\n</div>\n";
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"show-section row\">\n\n\n<div>\n  <div class=\"col-lg-12\">\n  <div class=\"panel panel-default\">\n    <div class=\"panel-heading\">\n        <h3>{{$ctrl.current.username}}'s Students</h3>\n    </div>\n    <!-- /.panel-heading -->\n    <div class=\"panel-body\">\n        <table width=\"100%\" id=\"example\" class=\"table table-striped table-bordered table-hover\" id=\"dataTables-example\">\n            <thead>\n                <tr ng=\"student in $ctrl.current.students\">\n                    <th>Students</th>\n                    <th>Grades</th>\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(2)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                    {{$ctrl.current.students[0].assignments[2].name}} - {{$ctrl.current.students[0].assignments[2].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(1)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[1].name}} - {{$ctrl.current.students[0].assignments[1].pointsMax}}</th>\n\n                    <th>\n                      <input style=\"font-size: 9px\" ng-click=\"$ctrl.deleteAssign(0)\" class=\"btn btn-default\" type=\"submit\" value=\"X - Remove\"><br>\n                      {{$ctrl.current.students[0].assignments[0].name}} - {{$ctrl.current.students[0].assignments[0].pointsMax}}</th>\n                </tr>\n            </thead>\n            <tbody>\n                <tr ng-repeat=\"student in $ctrl.current.students\" scope=\"row\" class=\"odd gradeX\" label=\"Students\">\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\">{{$index + 1}}. {{student.lastName}}, {{student.firstName}}</td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\">{{ getSumPointsEarned(student) / getSumPointsMax(student)*100 | number: 1 }}%</td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\"\n                     ng-model=\"student.assignments[2].pointsEarned\"></td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[1].pointsEarned\"></td>\n                    <td ng-style= \"{ 'background-color' : passOrFail(getSumPointsEarned(student) / getSumPointsMax(student))}\"><input type=\"number\" name=\"points-earned\" min=\"0\" ng-model=\"student.assignments[0].pointsEarned\"></td>\n                </tr>\n            </tbody>\n            <thead>\n              <tr>\n                <th>Class Averages</th>\n                <th ng-style= \"{ 'background-color' : passOrFail(runClassAverage())}\">{{ runClassAverage()*100 | number: 1}}%</th>\n                <th></th>\n                <th></th>\n                <th></th>\n              </tr>\n            </thead>\n        </table>\n\n    </div>\n\n  <br>\n  <center>\n    <div class=\"button-functions\">\n      <input ng-click=\"$ctrl.saveGrades()\" class=\"btn btn-warning\" type=\"submit\" value=\"Save Grades\">\n      <input ui-sref=\"createAssignment({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Assignment\">\n      <input ui-sref=\"createStudent({ userId:$ctrl.current._id })\" class=\"btn btn-default\" type=\"submit\" value=\"Add Student\">\n      <input ui-sref=\"deleteStudent({ userId:$ctrl.current._id })\" class=\"btn btn-danger\" type=\"submit\" value=\"Delete Student\">\n    </div>\n  </center>\n\n</div>\n<div class=\"show-footer\">\n\n  <input ui-sref=\"home\" class=\"btn btn-danger\" type=\"submit\" value=\"Log Out\">\n\n</div>\n";
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"signup-section container-fluid\">\n  <h2>Signup</h2><br>\n\n  <form ng-submit=\"$ctrl.addNewUser()\" class=\"form-group\" id=\"newUser\">\n    <label>Email:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.email\" name=\"email\"><br>\n\n    <label>Username:</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.username\" name=\"username\"><br>\n\n    <label>Password</label>\n    <input class=\"form-control\" type=\"text\" ng-model=\"$ctrl.newUser.password\" name=\"password\"><br>\n\n    <input class=\"btn btn-primary\" type=\"submit\"\n     value=\"Submit\">\n  </form>\n  <br>\n\n  <p>Already have an account? <a ui-sref=\"login\">Log in here.</a> </p>\n\n</div>\n";
+
+/***/ }),
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(6);
 __webpack_require__(7);
-__webpack_require__(0);
 __webpack_require__(8);
-__webpack_require__(1);
+__webpack_require__(0);
 __webpack_require__(9);
-__webpack_require__(2);
+__webpack_require__(1);
 __webpack_require__(10);
-__webpack_require__(3);
+__webpack_require__(2);
 __webpack_require__(11);
-__webpack_require__(4);
+__webpack_require__(3);
 __webpack_require__(12);
-__webpack_require__(5);
+__webpack_require__(4);
 __webpack_require__(13);
-module.exports = __webpack_require__(14);
+__webpack_require__(5);
+__webpack_require__(14);
+__webpack_require__(6);
+__webpack_require__(15);
+module.exports = __webpack_require__(16);
 
 
 /***/ })

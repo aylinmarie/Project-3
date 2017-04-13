@@ -18,7 +18,6 @@ var clone = require('lodash/clone');
 router.post('/', function createAction(request, response) {
   // var id = request.params.id;
   var userId = request.params.userId;
-  console.log(userId);
 
   var newStudent = new Student({
     firstName   : request.body.firstName,
@@ -40,7 +39,7 @@ router.post('/', function createAction(request, response) {
           var clonedAssignment = clone(assignment);
           clonedAssignment.pointsEarned = 0;
           newStudent.assignments.push(clonedAssignment);
-        })
+        }) //put in an else for zero students TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
 
       // Push this new student into their .students array
@@ -52,5 +51,21 @@ router.post('/', function createAction(request, response) {
       response.send({ student: newStudent });
     });
   });
+
+//======================
+// Remove STUDENT
+//======================
+
+// Remove /api/users/:userId/students
+router.delete('/', function deleteAction(request, response) {
+  console.log("made it to the controller");
+
+  User
+    .findById(userId)
+    .exec(function popStudent(err, user) {
+      console.log("controller assignment name: " + user.students[0].assignments[0].name);
+
+    })
+});
 
 module.exports = router;

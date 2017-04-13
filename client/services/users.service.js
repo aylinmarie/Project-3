@@ -7,12 +7,13 @@ UsersService.$inject = ['$http'];
 function UsersService($http) {
 	const self = this;
 
-	self.addAssignment = addAssignment;
-	self.addStudent = addStudent;
+	self.addAssignment    = addAssignment;
+	self.addStudent       = addStudent;
 	self.deleteAssignment = deleteAssignment;
-	self.loadCurrent = loadCurrent;
-	self.saveNewGrade = saveNewGrade;
-	self.signupUser = signupUser;
+	self.loadCurrent      = loadCurrent;
+	self.saveNewGrade     = saveNewGrade;
+	self.signupUser       = signupUser;
+	self.removeStudent    = removeStudent;
 
 
 	function loadCurrent(id) {
@@ -32,6 +33,14 @@ function UsersService($http) {
 		var studentsUrl = `/api/users/${userId}/students`;
 		
 		return $http.post(studentsUrl, student);
+	}
+
+	function removeStudent(userId, studentSelectedIndex) {
+		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
+		var studentsUrl = `/api/users/${userId}/student`;
+
+		return $http
+			.delete(studentsUrl, studentSelectedIndex);
 	}
 
 	function signupUser(email, username, password) {
