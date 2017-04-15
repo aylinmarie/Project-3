@@ -5,8 +5,8 @@ function DeleteStudentController($stateParams, UsersService) {
 
   vm.deleteStudent     = deleteStudent; // attaching the function to vm
   vm.loadCurrent       = loadCurrent;
-  //vm.selected.student = {};               // initializing newStudent
   vm.current           = {};
+  vm.selectedStudent   = {};
  
   activate();
 
@@ -19,14 +19,20 @@ function DeleteStudentController($stateParams, UsersService) {
     UsersService
       .loadCurrent($stateParams.userId)
       .then(function resolve(response) {
+        console.log(response.data.user.students[0].firstName)
         vm.current = response.data.user;
+      })
+      .then(function() {
+        // iterate over vm.current.students
+        vm.current.students.forEach(function(student) {
+            student.fullName = student.firstName + " " + student.lastName;
+        })
       })
   }
 
   function deleteStudent(newStudent) {
     console.log("Made to deleteStudent " + document.getElementById('newStudent').selectedIndex);
-    console.log("Delete student selected" + vm.selected.student);
-    console.log("XXX" + vm.selected.student.lastName);
+    console.log("Delete student selected" + vm.selectedStudent);
 
     studentSelectedIndex = document.getElementById('newStudent').selectedIndex
     
@@ -34,6 +40,7 @@ function DeleteStudentController($stateParams, UsersService) {
       .removeStudent($stateParams.userId, studentSelectedIndex)
       .then(function resolve(response) {
         vm.current = response.data.user;
+        console.log("back from the server" + vm.current);
         //do I need to splice out 
       })
 

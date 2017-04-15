@@ -134,8 +134,8 @@ function DeleteStudentController($stateParams, UsersService) {
 
   vm.deleteStudent = deleteStudent; // attaching the function to vm
   vm.loadCurrent = loadCurrent;
-  //vm.selected.student = {};               // initializing newStudent
   vm.current = {};
+  vm.selectedStudent = {};
 
   activate();
 
@@ -146,19 +146,25 @@ function DeleteStudentController($stateParams, UsersService) {
   function loadCurrent() {
 
     UsersService.loadCurrent($stateParams.userId).then(function resolve(response) {
+      console.log(response.data.user.students[0].firstName);
       vm.current = response.data.user;
+    }).then(function () {
+      // iterate over vm.current.students
+      vm.current.students.forEach(function (student) {
+        student.fullName = student.firstName + " " + student.lastName;
+      });
     });
   }
 
   function deleteStudent(newStudent) {
     console.log("Made to deleteStudent " + document.getElementById('newStudent').selectedIndex);
-    console.log("Delete student selected" + vm.selected.student);
-    console.log("XXX" + vm.selected.student.lastName);
+    console.log("Delete student selected" + vm.selectedStudent);
 
     studentSelectedIndex = document.getElementById('newStudent').selectedIndex;
 
     UsersService.removeStudent($stateParams.userId, studentSelectedIndex).then(function resolve(response) {
       vm.current = response.data.user;
+      console.log("back from the server" + vm.current);
       //do I need to splice out 
     });
   }
@@ -510,7 +516,7 @@ function UsersService($http) {
 
 	function removeStudent(userId, studentSelectedIndex) {
 		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
-		var studentsUrl = `/api/users/${userId}/student`;
+		var studentsUrl = `/api/users/${userId}/students`;
 
 		return $http.delete(studentsUrl, studentSelectedIndex);
 	}
@@ -38629,7 +38635,7 @@ module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"create container-fluid\">\n\n  <!-- <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have deleted a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Delete Another </button>\n  </div> -->\n\n  <h1>Delete Student</h1><br>\n\n   \n\t\t<form ng-submit=\"$ctrl.deleteStudent(newStudent)\"\n\t\t \tclass=\"form-group\">\n   \t  <select ng-model=\"$ctrl.selected.student\" id=\"newStudent\">\n\n\t\t\t\t<option\n\t        ng-repeat=\"student in $ctrl.current.students\" \n\t      \tng-selected=\"{{student == $ctrl.selected.student}}\"\n\t  \t\t\tvalue=\"{{student}}\"\n\t       >{{student.lastName}}, {{student.firstName}}</option>\n\t \t\t\n\t \t </select>\n\n\t \t <div>{{$ctrl.selected.student}}</div>\n\t \t <div>{{student.firstName}} {{student.lastName}} </div>\n\t \t \n    <div>\n      <input class=\"btn btn-primary\" \n      value=\"{{$ctrl.selected}}\"\n      type=\"submit\" >\n    </form>\n<!--  value=\"Delete {{$ctrl.selected.student}}\" \n \t\t\tng-click=\"mySubmit=true\" -->\n    </div>\n    <br>\n  </div>\n<!-- \n\t<div>\n\t\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\t</div> -->\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <!-- <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have deleted a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Delete Another </button>\n  </div> -->\n\n  <h1>Delete Student</h1><br>\n   \n\t\t<form ng-submit=\"$ctrl.deleteStudent(newStudent)\"\n\t\t \tclass=\"form-group\">\n\t\t\t <select ng-options=\"student as student.fullName for student in $ctrl.current.students track by student._id\" \n\t\t\t \tng-model=\"$ctrl.selectedStudent\" \n\t\t\t \tid=\"newStudent\">\t\n\t\t\t </select>\n    \t<input class=\"btn btn-primary\" \n    \tvalue=\"Delete {{$ctrl.selectedStudent.fullName}}?\"\n    \ttype=\"submit\" >\n    </form>\n    <br>\n  </div>\n<!-- \n\t<div>\n\t\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\t</div> -->\n</div>\n";
 
 /***/ }),
 /* 23 */

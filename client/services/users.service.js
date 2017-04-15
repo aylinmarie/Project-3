@@ -32,12 +32,13 @@ function UsersService($http) {
 	function addStudent(userId, student) {
 		var studentsUrl = `/api/users/${userId}/students`;
 		
-		return $http.post(studentsUrl, student);
+		return $http
+			.post(studentsUrl, student);
 	}
 
 	function removeStudent(userId, studentSelectedIndex) {
 		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
-		var studentsUrl = `/api/users/${userId}/student`;
+		var studentsUrl = `/api/users/${userId}/students`;
 
 		return $http
 			.delete(studentsUrl, studentSelectedIndex);

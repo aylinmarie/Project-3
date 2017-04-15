@@ -16,7 +16,6 @@ var clone = require('lodash/clone');
 
 // POST /api/users/:userId/students
 router.post('/', function createAction(request, response) {
-  // var id = request.params.id;
   var userId = request.params.userId;
 
   var newStudent = new Student({
@@ -41,12 +40,10 @@ router.post('/', function createAction(request, response) {
           newStudent.assignments.push(clonedAssignment);
         }) //put in an else for zero students TODO!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
       }
-
       // Push this new student into their .students array
       user.students.push(newStudent);
       // save that user
       user.save();
-
       // return { student: student }
       response.send({ student: newStudent });
     });
@@ -55,17 +52,25 @@ router.post('/', function createAction(request, response) {
 //======================
 // Remove STUDENT
 //======================
-
-// Remove /api/users/:userId/students
+// POST /api/users/:userId/students
 router.delete('/', function deleteAction(request, response) {
-  console.log("made it to the controller");
+  console.log("made it to the controller" + request.body.studentSelectedIndex);
+
+  var userId = request.params.userId;
+  var studentIndex = request.body.studentSelectedIndex;
+
+  console.log (studentIndex);
 
   User
-    .findById(userId)
-    .exec(function popStudent(err, user) {
-      console.log("controller assignment name: " + user.students[0].assignments[0].name);
-
+    .findById((userId), function (error, user) {
+      console.log("findbyuserid user:" + user);
+    })
+    .exec(function whatever(error, user) {
+      user.students.splice(studentIndex, 1);
+      user.save();  // This has to be like this. I have run a lit of errors from this misplaced.
+      response.json({user: user});
     })
 });
 
 module.exports = router;
+

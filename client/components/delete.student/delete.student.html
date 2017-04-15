@@ -7,31 +7,17 @@
   </div> -->
 
   <h1>Delete Student</h1><br>
-
    
 		<form ng-submit="$ctrl.deleteStudent(newStudent)"
 		 	class="form-group">
-   	  <select ng-model="$ctrl.selected.student" id="newStudent">
-
-				<option
-	        ng-repeat="student in $ctrl.current.students" 
-	      	ng-selected="{{student == $ctrl.selected.student}}"
-	  			value="{{student}}"
-	       >{{student.lastName}}, {{student.firstName}}</option>
-	 		
-	 	 </select>
-
-	 	 <div>{{$ctrl.selected.student}}</div>
-	 	 <div>{{student.firstName}} {{student.lastName}} </div>
-	 	 
-    <div>
-      <input class="btn btn-primary" 
-      value="{{$ctrl.selected}}"
-      type="submit" >
+			 <select ng-options="student as student.fullName for student in $ctrl.current.students track by student._id" 
+			 	ng-model="$ctrl.selectedStudent" 
+			 	id="newStudent">	
+			 </select>
+    	<input class="btn btn-primary" 
+    	value="Delete {{$ctrl.selectedStudent.fullName}}?"
+    	type="submit" >
     </form>
-<!--  value="Delete {{$ctrl.selected.student}}" 
- 			ng-click="mySubmit=true" -->
-    </div>
     <br>
   </div>
 <!-- 
