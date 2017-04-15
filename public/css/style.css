@@ -42,6 +42,12 @@ small {
 }
 
 .btn {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin: 30px 0px 30px 0px;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	margin: 30px 0px 30px 0px;
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	margin: 30px 0px 30px 0px;
@@ -94,6 +100,10 @@ th .btn {
 	margin: 10px;
 }
 
+.class-avg {
+	text-align: left;
+}
+
 
 /*HEADER*/
 
@@ -103,6 +113,19 @@ th .btn {
 }
 
 .buttons input {
+
+  background-color: white;
+  color: rgba(46, 82, 124, 1);
+  border: 2px solid transparent;
+  margin: 15px;
+  border-radius: 50px;
+  padding: 10px 30px 10px 30px;
+}
+
+.buttons input:hover {
+  background-color: transparent;
+  color: white;
+  border: 2px solid white;
 	background-color: white;
 	color: rgba(46, 82, 124, 1);
 	border: 2px solid transparent;
@@ -115,6 +138,10 @@ th .btn {
 	background-color: transparent;
 	color: white;
 	border: 2px solid white;
+<<<<<<< HEAD
+>>>>>>> 69aff408852d3d49cb0d610fd51cc288c5b3d285
+=======
+>>>>>>> david-branch
 }
 
 .nav1 {
@@ -197,18 +224,15 @@ h4, h5, h6, .h4, .h5, .h6 {
 }
 
 h3.em {
-	color: #ff715b;
-	text-transform: uppercase;
-	letter-spacing: .1em;
+  color: #ff715b;
+  text-transform: uppercase;
+  letter-spacing: .1em;
 }
+
 
 
 /*DASHBOARD*/
 
-.highlightFail {
-  background-color: #FFFF33;
-}
-}
 
 .button-functions {
 	text-align: center;
