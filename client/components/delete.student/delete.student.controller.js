@@ -39,6 +39,7 @@ function DeleteStudentController($stateParams, UsersService) {
       .then(function resolve(response) {
         vm.current = response.data.user;
         console.log("back from the server" + vm.current);
+        $state.go('show');
         //do I need to splice out 
       })
 

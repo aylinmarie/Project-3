@@ -53,17 +53,17 @@ router.post('/', function createAction(request, response) {
 // Remove STUDENT 
 //======================
 // PUT /api/users/:userId/students/:studentId
-router.put('/:id', function deleteAction(request, response) {
+router.put('/:studentId', function deleteAction(request, response) {
   console.log("made it to the controller" + request.params.studentId);
 
   var userId = request.params.userId;
   var studentId = request.params.studentId;
 
-  console.log (studentId);
+  console.log ("student id: " + studentId);
 
   User
     .findById((userId), function (error, user) {
-      console.log("findbyuserid user:" + user);
+      console.log("findbyuserid user: " + user);
     })
     .exec(function whatever(error, user) {
       var studentIndex = user.students.map(x => x.id).indexOf(studentId);
