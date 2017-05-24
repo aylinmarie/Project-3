@@ -127,9 +127,9 @@ module.exports = CreateStudentController;
 /* 2 */
 /***/ (function(module, exports) {
 
-DeleteStudentController.$inject = ['$stateParams', 'UsersService'];
+DeleteStudentController.$inject = ['$state', '$stateParams', 'UsersService'];
 
-function DeleteStudentController($stateParams, UsersService) {
+function DeleteStudentController($state, $stateParams, UsersService) {
   const vm = this;
 
   vm.deleteStudent = deleteStudent; // attaching the function to vm
@@ -163,8 +163,7 @@ function DeleteStudentController($stateParams, UsersService) {
     UsersService.removeStudent($stateParams.userId, vm.selectedStudent._id).then(function resolve(response) {
       vm.current = response.data.user;
       console.log("back from the server" + vm.current);
-      $state.go('show');
-      //do I need to splice out 
+      $state.go('show', { userId: $stateParams.userId });
     });
   }
 }
