@@ -35,7 +35,7 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
       template: '<create-student></create-student>'
     })
     .state('deleteStudent', {
-      url: '/users/:userId/students/delete',
+      url: '/users/:userId/students/:studentId',
       template: '<delete-student></delete-student>'
     });
     $urlRouterProvider.otherwise('/');

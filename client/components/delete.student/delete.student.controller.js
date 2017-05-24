@@ -31,13 +31,11 @@ function DeleteStudentController($stateParams, UsersService) {
   }
 
   function deleteStudent(newStudent) {
-    console.log("Made to deleteStudent " + document.getElementById('newStudent').selectedIndex);
-    console.log("Delete student selected" + vm.selectedStudent);
+    console.log("Delete student selected: " + vm.selectedStudent.firstName);
+    console.log("Student object id: " + vm.selectedStudent._id);
 
-    studentSelectedIndex = document.getElementById('newStudent').selectedIndex
-    
     UsersService
-      .removeStudent($stateParams.userId, studentSelectedIndex)
+      .removeStudent($stateParams.userId, vm.selectedStudent._id)
       .then(function resolve(response) {
         vm.current = response.data.user;
         console.log("back from the server" + vm.current);

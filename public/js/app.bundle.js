@@ -157,12 +157,10 @@ function DeleteStudentController($stateParams, UsersService) {
   }
 
   function deleteStudent(newStudent) {
-    console.log("Made to deleteStudent " + document.getElementById('newStudent').selectedIndex);
-    console.log("Delete student selected" + vm.selectedStudent);
+    console.log("Delete student selected: " + vm.selectedStudent.firstName);
+    console.log("Student object id: " + vm.selectedStudent._id);
 
-    studentSelectedIndex = document.getElementById('newStudent').selectedIndex;
-
-    UsersService.removeStudent($stateParams.userId, studentSelectedIndex).then(function resolve(response) {
+    UsersService.removeStudent($stateParams.userId, vm.selectedStudent._id).then(function resolve(response) {
       vm.current = response.data.user;
       console.log("back from the server" + vm.current);
       //do I need to splice out 
@@ -353,7 +351,7 @@ function uiRouterSetup($stateProvider, $urlRouterProvider) {
     url: '/users/:userId/students/new',
     template: '<create-student></create-student>'
   }).state('deleteStudent', {
-    url: '/users/:userId/students/delete',
+    url: '/users/:userId/students/:studentId',
     template: '<delete-student></delete-student>'
   });
   $urlRouterProvider.otherwise('/');
@@ -514,11 +512,12 @@ function UsersService($http) {
 		return $http.post(studentsUrl, student);
 	}
 
-	function removeStudent(userId, studentSelectedIndex) {
-		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
-		var studentsUrl = `/api/users/${userId}/students`;
+	function removeStudent(userId, studentId) {
+		console.log('UsersService');
+		console.log('id: ' + userId + '  studentId: ' + studentId);
+		var studentsUrl = `/api/users/${userId}/students/${studentId}`;
 
-		return $http.delete(studentsUrl, studentSelectedIndex);
+		return $http.delete(studentsUrl);
 	}
 
 	function signupUser(email, username, password) {
@@ -38635,7 +38634,7 @@ module.exports = "<div class=\"create container-fluid\">\n\n  <div class=\"alert
 /* 22 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"create container-fluid\">\n\n  <!-- <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have deleted a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Delete Another </button>\n  </div> -->\n\n  <h1>Delete Student</h1><br>\n   \n\t\t<form ng-submit=\"$ctrl.deleteStudent(newStudent)\"\n\t\t \tclass=\"form-group\">\n\t\t\t <select ng-options=\"student as student.fullName for student in $ctrl.current.students track by student._id\" \n\t\t\t \tng-model=\"$ctrl.selectedStudent\" \n\t\t\t \tid=\"newStudent\">\t\n\t\t\t </select>\n    \t<input class=\"btn btn-primary\" \n    \tvalue=\"Delete {{$ctrl.selectedStudent.fullName}}?\"\n    \ttype=\"submit\" >\n    </form>\n    <br>\n  </div>\n<!-- \n\t<div>\n\t\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\t</div> -->\n</div>\n";
+module.exports = "<div class=\"create container-fluid\">\n\n  <!-- <div class=\"alert alert-success alert-dismissable fade in\" ng-show=\"mySubmit\">\n    <a onclick=\"history.go(0)\" VALUE=\"Refresh\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a>\n    <h5><strong>Success!</strong> You have deleted a new student. </h5>\n    <button onclick=\"history.go(0)\" type=\"button\" name=\"button\" class=\"btn btn-default\"> Delete Another </button>\n  </div> -->\n\n  <h1>Delete Student</h1><br>\n   \n\t\t<form ng-submit=\"$ctrl.deleteStudent(newStudent)\"\n\t\t \tclass=\"form-group\">\n\t\t\t <select ng-options=\"student as student.fullName for student in $ctrl.current.students track by student._id\" \n\t\t\t \tng-model=\"$ctrl.selectedStudent\" \n\t\t\t \tid=\"newStudent\">\t\n\t\t\t </select>\n       <br>\n    \t<input class=\"btn btn-primary\" \n    \tvalue=\"Delete {{$ctrl.selectedStudent.fullName}}?\"\n    \ttype=\"submit\" >\n    </form>\n    <br>\n  </div>\n<!-- \n\t<div>\n\t\t<input onclick=\"history.back(-1)\" class=\"btn btn-default\" type=\"submit\" value=\"Go Back\">\n\t</div> -->\n</div>\n";
 
 /***/ }),
 /* 23 */

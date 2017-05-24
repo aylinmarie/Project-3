@@ -36,12 +36,13 @@ function UsersService($http) {
 			.post(studentsUrl, student);
 	}
 
-	function removeStudent(userId, studentSelectedIndex) {
-		console.log('id: ' + userId + '  studentIndex: ' + studentSelectedIndex);
-		var studentsUrl = `/api/users/${userId}/students`;
+	function removeStudent(userId, studentId) {
+		console.log('UsersService')
+		console.log('id: ' + userId + '  studentId: ' + studentId);
+		var studentsUrl = `/api/users/${userId}/students/${studentId}`;
 
 		return $http
-			.delete(studentsUrl, studentSelectedIndex);
+			.delete(studentsUrl);
 	}
 
 	function signupUser(email, username, password) {

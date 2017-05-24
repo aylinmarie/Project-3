@@ -52,20 +52,21 @@ router.post('/', function createAction(request, response) {
 //======================
 // Remove STUDENT
 //======================
-// POST /api/users/:userId/students
+// POST /api/users/:userId/students/:studentId
 router.delete('/', function deleteAction(request, response) {
-  console.log("made it to the controller" + request.body.studentSelectedIndex);
+  console.log("made it to the controller" + request.params.studentId);
 
   var userId = request.params.userId;
-  var studentIndex = request.body.studentSelectedIndex;
+  var studentId = request.params.studentId;
 
-  console.log (studentIndex);
+  console.log (studentId);
 
   User
     .findById((userId), function (error, user) {
       console.log("findbyuserid user:" + user);
     })
     .exec(function whatever(error, user) {
+      var studentIndex = user.students.map(x => x.id).indexOf(studentId);
       user.students.splice(studentIndex, 1);
       user.save();  // This has to be like this. I have run a lit of errors from this misplaced.
       response.json({user: user});
