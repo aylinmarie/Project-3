@@ -6,7 +6,7 @@ UsersService.$inject = ['$http'];
 
 function UsersService($http) {
 	const self = this;
-
+ 
 	self.addAssignment    = addAssignment;
 	self.addStudent       = addStudent;
 	self.deleteAssignment = deleteAssignment;
@@ -42,7 +42,7 @@ function UsersService($http) {
 		var studentsUrl = `/api/users/${userId}/students/${studentId}`;
 
 		return $http
-			.delete(studentsUrl);
+			.put(studentsUrl);
 	}
 
 	function signupUser(email, username, password) {

@@ -48,12 +48,12 @@ router.post('/', function createAction(request, response) {
       response.send({ student: newStudent });
     });
   });
-
+ 
 //======================
-// Remove STUDENT
+// Remove STUDENT 
 //======================
-// POST /api/users/:userId/students/:studentId
-router.delete('/', function deleteAction(request, response) {
+// PUT /api/users/:userId/students/:studentId
+router.put('/:id', function deleteAction(request, response) {
   console.log("made it to the controller" + request.params.studentId);
 
   var userId = request.params.userId;

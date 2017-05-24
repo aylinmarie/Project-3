@@ -517,7 +517,7 @@ function UsersService($http) {
 		console.log('id: ' + userId + '  studentId: ' + studentId);
 		var studentsUrl = `/api/users/${userId}/students/${studentId}`;
 
-		return $http.delete(studentsUrl);
+		return $http.put(studentsUrl);
 	}
 
 	function signupUser(email, username, password) {
